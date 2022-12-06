@@ -7,7 +7,8 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option java_multiple_files = true;
-option java_package = "com.topcoder.onlinereview.upload.protos";
+option java_package = "com.topcoder.onlinereview.grpc.upload.proto";
+option java_outer_classname = "UploadProtos";
 
 message EntityProto {
   google.protobuf.Int64Value id = 1;
@@ -137,6 +138,10 @@ message MimeTypeListProto {
   repeated MimeTypeProto mime_types = 1;
 }
 
+message FilterProto {
+  bytes filter = 1;
+}
+
 service UploadService {
   rpc addUploadType(EntityProto) returns (google.protobuf.Empty);
   rpc addUploadStatus(EntityProto) returns (google.protobuf.Empty);
@@ -172,4 +177,6 @@ service UploadService {
   rpc loadSubmissions(EntityIdsProto) returns (SubmissionCompleteListProto);
   rpc getImagesForSubmission(IdProto) returns (SubmissionImageListProto);
   rpc loadMimeTypes(EntityIdsProto) returns (MimeTypeListProto);
+  rpc searchUploads(FilterProto) returns (UploadCompleteListProto);
+  rpc searchSubmissions(FilterProto) returns (SubmissionCompleteListProto);
 }
