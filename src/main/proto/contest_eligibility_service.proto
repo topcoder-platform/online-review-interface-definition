@@ -62,11 +62,11 @@ message HaveEligibilityResponse {
 }
 
 service ContestEligibilityService {
-  rpc create(CreateRequest) returns (google.protobuf.Empty); // Should we return the id? Maybe we ignore in or-review-backend but it's useful for testing and in other services!
-  rpc getIdByContestId(GetIdByContestIdRequest) returns (GetIdByContestIdResponse);
-  rpc remove(RemoveRequest) returns (google.protobuf.Empty);
-  rpc bulkRemove(BulkRemoveRequest) returns (google.protobuf.Empty);
-  rpc update(UpdateRequest) returns (google.protobuf.Empty);
-  rpc getContestEligibility(GetContestEligibilityRequest) returns (ContestEligibilitiesResponse);
-  rpc haveEligibility(HaveEligibilityRequest) returns (HaveEligibilityResponse);
+  rpc Create(CreateRequest) returns (google.protobuf.Empty);
+  rpc GetIdByContestId(GetIdByContestIdRequest) returns (GetIdByContestIdResponse);
+  rpc Remove(RemoveRequest) returns (google.protobuf.Empty);
+  rpc BulkRemove(BulkRemoveRequest) returns (google.protobuf.Empty);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc GetContestEligibility(GetContestEligibilityRequest) returns (ContestEligibilitiesResponse);
+  rpc HaveEligibility(HaveEligibilityRequest) returns (HaveEligibilityResponse);
 }

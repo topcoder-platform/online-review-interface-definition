@@ -17,7 +17,7 @@ message LoadDeliverablesWithoutSubmissionRequest {
 }
 
 message LoadDeliverablesWithoutSubmissionResponse {
-  repeated DeliverableWithoutSubmissionProto deliverables_without_submission = 1;
+  repeated DeliverableWithoutSubmissionProto deliverables_without_submissions = 1;
 }
 
 message DeliverableWithoutSubmissionProto {
@@ -42,7 +42,7 @@ message LoadDeliverablesWithSubmissionRequest {
 }
 
 message LoadDeliverablesWithSubmissionResponse {
-  repeated DeliverableWithSubmissionProto deliverables_with_submission = 1;
+  repeated DeliverableWithSubmissionProto deliverables_with_submissions = 1;
 }
 
 message DeliverableWithSubmissionProto {
@@ -98,7 +98,7 @@ message AggregationDeliverableCheckRequest {
 }
 
 message AggregationDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message AppealResponsesDeliverableCheckRequest {
@@ -107,7 +107,7 @@ message AppealResponsesDeliverableCheckRequest {
 }
 
 message AppealResponsesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message CommittedReviewDeliverableCheckRequest {
@@ -118,7 +118,7 @@ message CommittedReviewDeliverableCheckRequest {
 }
 
 message CommittedReviewDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message FinalFixesDeliverableCheckRequest {
@@ -127,7 +127,7 @@ message FinalFixesDeliverableCheckRequest {
 }
 
 message FinalFixesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message FinalReviewDeliverableCheckRequest {
@@ -140,7 +140,7 @@ message FinalReviewDeliverableCheckResponseMessage {
 }
 
 message FinalReviewDeliverableCheckResponse {
-  repeated FinalReviewDeliverableCheckResponseMessage result = 1;
+  repeated FinalReviewDeliverableCheckResponseMessage results = 1;
 }
 
 message IndividualReviewDeliverableCheckRequest {
@@ -153,7 +153,7 @@ message IndividualReviewDeliverableCheckResponseMessage {
 }
 
 message IndividualReviewDeliverableCheckResponse {
-  repeated IndividualReviewDeliverableCheckResponseMessage result = 1;
+  repeated IndividualReviewDeliverableCheckResponseMessage results = 1;
 }
 
 message SpecificationSubmissionDeliverableCheckRequest {
@@ -162,7 +162,7 @@ message SpecificationSubmissionDeliverableCheckRequest {
 }
 
 message SpecificationSubmissionDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message SubmissionDeliverableCheckRequest {
@@ -171,7 +171,7 @@ message SubmissionDeliverableCheckRequest {
 }
 
 message SubmissionDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message SubmitterCommentDeliverableCheckRequest {
@@ -184,7 +184,7 @@ message SubmitterCommentDeliverableCheckResponseMessage {
 }
 
 message SubmitterCommentDeliverableCheckResponse {
-  repeated SubmitterCommentDeliverableCheckResponseMessage result = 1;
+  repeated SubmitterCommentDeliverableCheckResponseMessage results = 1;
 }
 
 message TestCasesDeliverableCheckRequest {
@@ -193,7 +193,7 @@ message TestCasesDeliverableCheckRequest {
 }
 
 message TestCasesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_date = 1;
+  repeated google.protobuf.Timestamp modify_dates = 1;
 }
 
 message FilterProto {
@@ -249,22 +249,22 @@ message SearchLateDeliverablesResponse {
 }
 
 service DeliverableService {
-  rpc loadDeliverablesWithoutSubmission(LoadDeliverablesWithoutSubmissionRequest) returns (LoadDeliverablesWithoutSubmissionResponse);
-  rpc loadDeliverablesWithSubmission(LoadDeliverablesWithSubmissionRequest) returns (LoadDeliverablesWithSubmissionResponse);
-  rpc updateLateDeliverable(UpdateLateDeliverableRequest) returns (UpdatedCountProto);
-  rpc getLateDeliverableTypes(google.protobuf.Empty) returns (LateDeliverableTypesResponse);
-  rpc aggregationDeliverableCheck(AggregationDeliverableCheckRequest) returns (AggregationDeliverableCheckResponse);
-  rpc appealResponsesDeliverableCheck(AppealResponsesDeliverableCheckRequest) returns (AppealResponsesDeliverableCheckResponse);
-  rpc committedReviewDeliverableCheck(CommittedReviewDeliverableCheckRequest) returns (CommittedReviewDeliverableCheckResponse);
-  rpc finalFixesDeliverableCheck(FinalFixesDeliverableCheckRequest) returns (FinalFixesDeliverableCheckResponse);
-  rpc finalReviewDeliverableCheck(FinalReviewDeliverableCheckRequest) returns (FinalReviewDeliverableCheckResponse);
-  rpc individualReviewDeliverableCheck(IndividualReviewDeliverableCheckRequest) returns (IndividualReviewDeliverableCheckResponse);
-  rpc specificationSubmissionDeliverableCheck(SpecificationSubmissionDeliverableCheckRequest) returns (SpecificationSubmissionDeliverableCheckResponse);
-  rpc submissionDeliverableCheck(SubmissionDeliverableCheckRequest) returns (SubmissionDeliverableCheckResponse);
-  rpc submitterCommentDeliverableCheck(SubmitterCommentDeliverableCheckRequest) returns (SubmitterCommentDeliverableCheckResponse);
-  rpc testCasesDeliverableCheck(TestCasesDeliverableCheckRequest) returns (TestCasesDeliverableCheckResponse);
-  rpc searchDeliverables(FilterProto) returns (SearchDeliverablesResponse);
-  rpc searchDeliverablesWithSubmission(FilterProto) returns (SearchDeliverablesWithSubmissionResponse);
-  rpc searchLateDeliverablesNonRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
-  rpc searchLateDeliverablesRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
+  rpc LoadDeliverablesWithoutSubmission(LoadDeliverablesWithoutSubmissionRequest) returns (LoadDeliverablesWithoutSubmissionResponse);
+  rpc LoadDeliverablesWithSubmission(LoadDeliverablesWithSubmissionRequest) returns (LoadDeliverablesWithSubmissionResponse);
+  rpc UpdateLateDeliverable(UpdateLateDeliverableRequest) returns (UpdatedCountProto);
+  rpc GetLateDeliverableTypes(google.protobuf.Empty) returns (LateDeliverableTypesResponse);
+  rpc AggregationDeliverableCheck(AggregationDeliverableCheckRequest) returns (AggregationDeliverableCheckResponse);
+  rpc AppealResponsesDeliverableCheck(AppealResponsesDeliverableCheckRequest) returns (AppealResponsesDeliverableCheckResponse);
+  rpc CommittedReviewDeliverableCheck(CommittedReviewDeliverableCheckRequest) returns (CommittedReviewDeliverableCheckResponse);
+  rpc FinalFixesDeliverableCheck(FinalFixesDeliverableCheckRequest) returns (FinalFixesDeliverableCheckResponse);
+  rpc FinalReviewDeliverableCheck(FinalReviewDeliverableCheckRequest) returns (FinalReviewDeliverableCheckResponse);
+  rpc IndividualReviewDeliverableCheck(IndividualReviewDeliverableCheckRequest) returns (IndividualReviewDeliverableCheckResponse);
+  rpc SpecificationSubmissionDeliverableCheck(SpecificationSubmissionDeliverableCheckRequest) returns (SpecificationSubmissionDeliverableCheckResponse);
+  rpc SubmissionDeliverableCheck(SubmissionDeliverableCheckRequest) returns (SubmissionDeliverableCheckResponse);
+  rpc SubmitterCommentDeliverableCheck(SubmitterCommentDeliverableCheckRequest) returns (SubmitterCommentDeliverableCheckResponse);
+  rpc TestCasesDeliverableCheck(TestCasesDeliverableCheckRequest) returns (TestCasesDeliverableCheckResponse);
+  rpc SearchDeliverables(FilterProto) returns (SearchDeliverablesResponse);
+  rpc SearchDeliverablesWithSubmission(FilterProto) returns (SearchDeliverablesWithSubmissionResponse);
+  rpc SearchLateDeliverablesNonRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
+  rpc SearchLateDeliverablesRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
 }
