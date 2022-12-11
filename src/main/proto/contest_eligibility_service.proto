@@ -14,11 +14,7 @@ message CreateRequest {
   google.protobuf.BoolValue studio = 2;
 }
 
-message GetIdByContestIdRequest {
-  google.protobuf.Int64Value contest_id = 1;
-}
-
-message GetIdByContestIdResponse {
+message CreateResponse {
   google.protobuf.Int64Value contest_eligibility_id = 1;
 }
 
@@ -62,8 +58,7 @@ message HaveEligibilityResponse {
 }
 
 service ContestEligibilityService {
-  rpc Create(CreateRequest) returns (google.protobuf.Empty);
-  rpc GetIdByContestId(GetIdByContestIdRequest) returns (GetIdByContestIdResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
   rpc Remove(RemoveRequest) returns (google.protobuf.Empty);
   rpc BulkRemove(BulkRemoveRequest) returns (google.protobuf.Empty);
   rpc Update(UpdateRequest) returns (google.protobuf.Empty);
