@@ -57,6 +57,15 @@ message HaveEligibilityResponse {
   repeated int64 contest_ids = 1;
 }
 
+message ValidateUserContestEligibilityRequest {
+  google.protobuf.Int64Value user_id = 1;
+  google.protobuf.Int64Value group_id = 2;
+}
+
+message ValidateUserContestEligibilityResponse {
+  bool is_valid = 1;
+}
+
 service ContestEligibilityService {
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc Remove(RemoveRequest) returns (google.protobuf.Empty);
@@ -64,4 +73,5 @@ service ContestEligibilityService {
   rpc Update(UpdateRequest) returns (google.protobuf.Empty);
   rpc GetContestEligibility(GetContestEligibilityRequest) returns (ContestEligibilitiesResponse);
   rpc HaveEligibility(HaveEligibilityRequest) returns (HaveEligibilityResponse);
+  rpc ValidateUserContestEligibility(ValidateUserContestEligibilityRequest) returns (ValidateUserContestEligibilityResponse);
 }
