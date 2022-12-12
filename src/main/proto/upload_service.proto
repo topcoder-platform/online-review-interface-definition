@@ -11,22 +11,22 @@ option java_package = "com.topcoder.onlinereview.grpc.upload.proto";
 option java_outer_classname = "UploadProtos";
 
 message EntityProto {
-  google.protobuf.Int64Value id = 1;
-  google.protobuf.StringValue create_user = 2;
+  optional int64 id = 1;
+  optional string create_user = 2;
   google.protobuf.Timestamp create_date = 3;
-  google.protobuf.StringValue modify_user = 4;
+  optional string modify_user = 4;
   google.protobuf.Timestamp modify_date = 5;
-  google.protobuf.StringValue name = 6;
-  google.protobuf.StringValue description = 7;
+  optional string name = 6;
+  optional string description = 7;
 }
 
 message IdProto {
-  google.protobuf.Int64Value id = 1;
+  optional int64 id = 1;
 }
 
 message RemoveSubmissionImageRequest {
-  google.protobuf.Int64Value submission_id = 1;
-  google.protobuf.Int32Value image_id = 2;
+  optional int64 submission_id = 1;
+  optional int32 image_id = 2;
 }
 
 message EntityIdsProto {
@@ -38,38 +38,38 @@ message EntityListProto {
 }
 
 message UploadProto {
-  google.protobuf.Int64Value upload_id = 1;
-  google.protobuf.StringValue create_user = 2;
+  optional int64 upload_id = 1;
+  optional string create_user = 2;
   google.protobuf.Timestamp create_date = 3;
-  google.protobuf.StringValue modify_user = 4;
+  optional string modify_user = 4;
   google.protobuf.Timestamp modify_date = 5;
-  google.protobuf.Int64Value project_id = 6;
-  google.protobuf.Int64Value project_phase_id = 7;
-  google.protobuf.Int64Value resource_id = 8;
-  google.protobuf.Int64Value upload_type_id = 9;
-  google.protobuf.Int64Value upload_status_id = 10;
-  google.protobuf.StringValue parameter = 11;
-  google.protobuf.StringValue upload_desc = 12;
-  google.protobuf.StringValue url = 13;
+  optional int64 project_id = 6;
+  optional int64 project_phase_id = 7;
+  optional int64 resource_id = 8;
+  optional int64 upload_type_id = 9;
+  optional int64 upload_status_id = 10;
+  optional string parameter = 11;
+  optional string upload_desc = 12;
+  optional string url = 13;
 }
 
 message SubmissionProto {
-  google.protobuf.Int64Value submission_id = 1;
-  google.protobuf.StringValue create_user = 2;
+  optional int64 submission_id = 1;
+  optional string create_user = 2;
   google.protobuf.Timestamp create_date = 3;
-  google.protobuf.StringValue modify_user = 4;
+  optional string modify_user = 4;
   google.protobuf.Timestamp modify_date = 5;
-  google.protobuf.Int64Value submission_status_id = 6;
-  google.protobuf.Int64Value submission_type_id = 7;
-  google.protobuf.DoubleValue screening_score = 8;
-  google.protobuf.DoubleValue initial_score = 9;
-  google.protobuf.DoubleValue final_score = 10;
-  google.protobuf.Int64Value placement = 11;
-  google.protobuf.Int32Value user_rank = 12;
-  google.protobuf.BoolValue mark_for_purchase = 13;
-  google.protobuf.Int64Value prize_id = 14;
-  google.protobuf.Int64Value upload_id = 15;
-  google.protobuf.StringValue thurgood_job_id = 16;
+  optional int64 submission_status_id = 6;
+  optional int64 submission_type_id = 7;
+  optional double screening_score = 8;
+  optional double initial_score = 9;
+  optional double final_score = 10;
+  optional int64 placement = 11;
+  optional int32 user_rank = 12;
+  optional bool mark_for_purchase = 13;
+  optional int64 prize_id = 14;
+  optional int64 upload_id = 15;
+  optional string thurgood_job_id = 16;
 }
 
 message UploadCompleteProto {
@@ -96,25 +96,25 @@ message SubmissionCompleteListProto {
 }
 
 message PrizeProto {
-  google.protobuf.Int64Value prize_id = 1;
-  google.protobuf.Int32Value place = 2;
-  google.protobuf.DoubleValue prize_amount = 3;
-  google.protobuf.Int32Value number_of_submissions = 4;
-  google.protobuf.StringValue create_user = 5;
+  optional int64 prize_id = 1;
+  optional int32 place = 2;
+  optional double prize_amount = 3;
+  optional int32 number_of_submissions = 4;
+  optional string create_user = 5;
   google.protobuf.Timestamp create_date = 6;
-  google.protobuf.StringValue modify_user = 7;
+  optional string modify_user = 7;
   google.protobuf.Timestamp modify_date = 8;
 }
 
 message PrizeTypeProto {
-  google.protobuf.Int64Value prize_type_id = 1;
-  google.protobuf.StringValue prize_type_desc = 2;
+  optional int64 prize_type_id = 1;
+  optional string prize_type_desc = 2;
 }
 
 message SubmissionImageProto {
-  google.protobuf.Int64Value submission_id = 1;
-  google.protobuf.Int32Value image_id = 2;
-  google.protobuf.Int32Value sort_order = 3;
+  optional int64 submission_id = 1;
+  optional int32 image_id = 2;
+  optional int32 sort_order = 3;
   google.protobuf.Timestamp create_date = 4;
   google.protobuf.Timestamp modify_date = 5;
 }
@@ -124,14 +124,14 @@ message SubmissionImageListProto {
 }
 
 message MimeTypeProto {
-  google.protobuf.Int64Value mime_type_id = 1;
-  google.protobuf.StringValue mime_type_desc = 2;
-  google.protobuf.Int64Value file_type_id = 3;
-  google.protobuf.StringValue file_type_desc = 4;
-  google.protobuf.Int32Value sort = 5;
-  google.protobuf.BoolValue image_file_ind = 6;
-  google.protobuf.StringValue extension = 7;
-  google.protobuf.BoolValue bundled_file_ind = 8;
+  optional int64 mime_type_id = 1;
+  optional string mime_type_desc = 2;
+  optional int64 file_type_id = 3;
+  optional string file_type_desc = 4;
+  optional int32 sort = 5;
+  optional bool image_file_ind = 6;
+  optional string extension = 7;
+  optional bool bundled_file_ind = 8;
 }
 
 message MimeTypeListProto {

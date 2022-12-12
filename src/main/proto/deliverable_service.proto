@@ -21,17 +21,17 @@ message LoadDeliverablesWithoutSubmissionResponse {
 }
 
 message DeliverableWithoutSubmissionProto {
-  google.protobuf.Int64Value project_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
-  google.protobuf.Int64Value resource_id = 3;
-  google.protobuf.BoolValue required = 4;
-  google.protobuf.Int64Value deliverable_id = 5;
-  google.protobuf.StringValue create_user = 6;
+  optional int64 project_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional bool required = 4;
+  optional int64 deliverable_id = 5;
+  optional string create_user = 6;
   google.protobuf.Timestamp create_date = 7;
-  google.protobuf.StringValue modify_user = 8;
+  optional string modify_user = 8;
   google.protobuf.Timestamp modify_date = 9;
-  google.protobuf.StringValue name = 10;
-  google.protobuf.StringValue description = 11;
+  optional string name = 10;
+  optional string description = 11;
 }
 
 message LoadDeliverablesWithSubmissionRequest {
@@ -46,37 +46,37 @@ message LoadDeliverablesWithSubmissionResponse {
 }
 
 message DeliverableWithSubmissionProto {
-  google.protobuf.Int64Value project_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
-  google.protobuf.Int64Value resource_id = 3;
-  google.protobuf.Int64Value submission_id = 4;
-  google.protobuf.BoolValue required = 5;
-  google.protobuf.Int64Value deliverable_id = 6;
-  google.protobuf.StringValue create_user = 7;
+  optional int64 project_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional int64 submission_id = 4;
+  optional bool required = 5;
+  optional int64 deliverable_id = 6;
+  optional string create_user = 7;
   google.protobuf.Timestamp create_date = 8;
-  google.protobuf.StringValue modify_user = 9;
+  optional string modify_user = 9;
   google.protobuf.Timestamp modify_date = 10;
-  google.protobuf.StringValue name = 11;
-  google.protobuf.StringValue description = 12;
+  optional string name = 11;
+  optional string description = 12;
 }
 
 message UpdateLateDeliverableRequest {
-  google.protobuf.Int64Value late_deliverable_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
-  google.protobuf.Int64Value resource_id = 3;
-  google.protobuf.Int64Value deliverable_id = 4;
+  optional int64 late_deliverable_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional int64 deliverable_id = 4;
   google.protobuf.Timestamp deadline = 5;
   google.protobuf.Timestamp compensated_deadline = 6;
   google.protobuf.Timestamp create_date = 7;
-  google.protobuf.BoolValue forgive_ind = 8;
+  optional bool forgive_ind = 8;
   google.protobuf.Timestamp last_notified = 9;
-  google.protobuf.Int64Value delay = 10;
-  google.protobuf.StringValue explanation = 11;
+  optional int64 delay = 10;
+  optional string explanation = 11;
   google.protobuf.Timestamp explanation_date = 12;
-  google.protobuf.StringValue response = 13;
-  google.protobuf.StringValue response_user = 14;
+  optional string response = 13;
+  optional string response_user = 14;
   google.protobuf.Timestamp response_date = 15;
-  google.protobuf.Int64Value late_deliverable_type_id = 16;
+  optional int64 late_deliverable_type_id = 16;
 }
 
 message UpdatedCountProto {
@@ -84,9 +84,9 @@ message UpdatedCountProto {
 }
 
 message LateDeliverableTypeProto {
-  google.protobuf.Int64Value late_deliverable_type_id = 1;
-  google.protobuf.StringValue name = 2;
-  google.protobuf.StringValue description = 3;
+  optional int64 late_deliverable_type_id = 1;
+  optional string name = 2;
+  optional string description = 3;
 }
 
 message LateDeliverableTypesResponse {
@@ -94,7 +94,7 @@ message LateDeliverableTypesResponse {
 }
 
 message AggregationDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
+  optional int64 resource_id = 1;
 }
 
 message AggregationDeliverableCheckResponse {
@@ -102,8 +102,8 @@ message AggregationDeliverableCheckResponse {
 }
 
 message AppealResponsesDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value submission_id = 2;
+  optional int64 resource_id = 1;
+  optional int64 submission_id = 2;
 }
 
 message AppealResponsesDeliverableCheckResponse {
@@ -111,10 +111,10 @@ message AppealResponsesDeliverableCheckResponse {
 }
 
 message CommittedReviewDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
-  google.protobuf.Int64Value submission_id = 3;
-  google.protobuf.BoolValue is_per_submission = 4;
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 submission_id = 3;
+  optional bool is_per_submission = 4;
 }
 
 message CommittedReviewDeliverableCheckResponse {
@@ -122,8 +122,8 @@ message CommittedReviewDeliverableCheckResponse {
 }
 
 message FinalFixesDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
 }
 
 message FinalFixesDeliverableCheckResponse {
@@ -131,12 +131,12 @@ message FinalFixesDeliverableCheckResponse {
 }
 
 message FinalReviewDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
+  optional int64 resource_id = 1;
 }
 
 message FinalReviewDeliverableCheckResponseMessage {
   google.protobuf.Timestamp modify_date = 1;
-  google.protobuf.Int64Value submission_id = 2;
+  optional int64 submission_id = 2;
 }
 
 message FinalReviewDeliverableCheckResponse {
@@ -144,12 +144,12 @@ message FinalReviewDeliverableCheckResponse {
 }
 
 message IndividualReviewDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
+  optional int64 resource_id = 1;
 }
 
 message IndividualReviewDeliverableCheckResponseMessage {
   google.protobuf.Timestamp modify_date = 1;
-  google.protobuf.Int64Value submission_id = 2;
+  optional int64 submission_id = 2;
 }
 
 message IndividualReviewDeliverableCheckResponse {
@@ -157,8 +157,8 @@ message IndividualReviewDeliverableCheckResponse {
 }
 
 message SpecificationSubmissionDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
 }
 
 message SpecificationSubmissionDeliverableCheckResponse {
@@ -166,8 +166,8 @@ message SpecificationSubmissionDeliverableCheckResponse {
 }
 
 message SubmissionDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
 }
 
 message SubmissionDeliverableCheckResponse {
@@ -175,12 +175,12 @@ message SubmissionDeliverableCheckResponse {
 }
 
 message SubmitterCommentDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
+  optional int64 resource_id = 1;
 }
 
 message SubmitterCommentDeliverableCheckResponseMessage {
   google.protobuf.Timestamp modify_date = 1;
-  google.protobuf.Int64Value submission_id = 2;
+  optional int64 submission_id = 2;
 }
 
 message SubmitterCommentDeliverableCheckResponse {
@@ -188,8 +188,8 @@ message SubmitterCommentDeliverableCheckResponse {
 }
 
 message TestCasesDeliverableCheckRequest {
-  google.protobuf.Int64Value resource_id = 1;
-  google.protobuf.Int64Value project_phase_id = 2;
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
 }
 
 message TestCasesDeliverableCheckResponse {
@@ -201,9 +201,9 @@ message FilterProto {
 }
 
 message SearchDeliverablesProto {
-  google.protobuf.Int64Value deliverable_id = 1;
-  google.protobuf.Int64Value resource_id = 2;
-  google.protobuf.Int64Value project_phase_id = 3;
+  optional int64 deliverable_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 project_phase_id = 3;
 }
 
 message SearchDeliverablesResponse {
@@ -211,10 +211,10 @@ message SearchDeliverablesResponse {
 }
 
 message SearchDeliverablesWithSubmissionProto {
-  google.protobuf.Int64Value deliverable_id = 1;
-  google.protobuf.Int64Value resource_id = 2;
-  google.protobuf.Int64Value project_phase_id = 3;
-  google.protobuf.Int64Value submission_id = 4;
+  optional int64 deliverable_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 project_phase_id = 3;
+  optional int64 submission_id = 4;
 }
 
 message SearchDeliverablesWithSubmissionResponse {
@@ -222,25 +222,25 @@ message SearchDeliverablesWithSubmissionResponse {
 }
 
 message LateDeliverablesProto {
-  google.protobuf.Int64Value late_deliverable_id = 1;
-  google.protobuf.Int64Value project_id = 2;
-  google.protobuf.Int64Value project_phase_id = 3;
-  google.protobuf.Int64Value resource_id = 4;
-  google.protobuf.Int64Value deliverable_id = 5;
+  optional int64 late_deliverable_id = 1;
+  optional int64 project_id = 2;
+  optional int64 project_phase_id = 3;
+  optional int64 resource_id = 4;
+  optional int64 deliverable_id = 5;
   google.protobuf.Timestamp deadline = 6;
   google.protobuf.Timestamp compensated_deadline = 7;
   google.protobuf.Timestamp create_date = 8;
-  google.protobuf.BoolValue forgive_ind = 9;
+  optional bool forgive_ind = 9;
   google.protobuf.Timestamp last_notified = 10;
-  google.protobuf.Int64Value delay = 11;
-  google.protobuf.StringValue explanation = 12;
+  optional int64 delay = 11;
+  optional string explanation = 12;
   google.protobuf.Timestamp explanation_date = 13;
-  google.protobuf.StringValue response = 14;
-  google.protobuf.StringValue response_user = 15;
+  optional string response = 14;
+  optional string response_user = 15;
   google.protobuf.Timestamp response_date = 16;
-  google.protobuf.Int64Value late_deliverable_type_id = 17;
-  google.protobuf.StringValue name = 18;
-  google.protobuf.StringValue description = 19;
+  optional int64 late_deliverable_type_id = 17;
+  optional string name = 18;
+  optional string description = 19;
 
 }
 
