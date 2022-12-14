@@ -4,7 +4,6 @@ package deliverable;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 
 option java_multiple_files = true;
 option java_package = "com.topcoder.onlinereview.grpc.deliverable.proto";
@@ -97,8 +96,12 @@ message AggregationDeliverableCheckRequest {
   optional int64 resource_id = 1;
 }
 
+message ModifyDateProto {
+  google.protobuf.Timestamp modify_date = 1;
+}
+
 message AggregationDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message AppealResponsesDeliverableCheckRequest {
@@ -107,7 +110,7 @@ message AppealResponsesDeliverableCheckRequest {
 }
 
 message AppealResponsesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message CommittedReviewDeliverableCheckRequest {
@@ -118,7 +121,7 @@ message CommittedReviewDeliverableCheckRequest {
 }
 
 message CommittedReviewDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message FinalFixesDeliverableCheckRequest {
@@ -127,7 +130,7 @@ message FinalFixesDeliverableCheckRequest {
 }
 
 message FinalFixesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message FinalReviewDeliverableCheckRequest {
@@ -162,20 +165,21 @@ message SpecificationSubmissionDeliverableCheckRequest {
 }
 
 message SpecificationSubmissionDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message SubmissionDeliverableCheckRequest {
   optional int64 resource_id = 1;
-  optional int64 project_phase_id = 2;
+  optional int64 submission_type_id = 2;
 }
 
 message SubmissionDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message SubmitterCommentDeliverableCheckRequest {
   optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
 }
 
 message SubmitterCommentDeliverableCheckResponseMessage {
@@ -193,7 +197,7 @@ message TestCasesDeliverableCheckRequest {
 }
 
 message TestCasesDeliverableCheckResponse {
-  repeated google.protobuf.Timestamp modify_dates = 1;
+  repeated ModifyDateProto modify_dates = 1;
 }
 
 message FilterProto {
