@@ -1,0 +1,337 @@
+syntax = "proto3";
+
+package project;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.project.proto";
+option java_outer_classname = "ProjectProtos";
+
+message CountProto {
+  int32 count = 1;
+}
+
+message GetProjectsRequest {
+  repeated int64 project_ids = 1;
+}
+
+message ProjectProto {
+  optional int64 project_id = 1;
+  optional int64 project_status_id = 2;
+  optional string status_name = 3;
+  optional int64 project_category_id = 4;
+  optional string category_name = 5;
+  optional int64 project_type_id = 6;
+  optional string type_name = 7;
+  optional string create_user = 8;
+  google.protobuf.Timestamp create_date = 9;
+  optional string modify_user = 10;
+  google.protobuf.Timestamp modify_date = 11;
+  optional string description = 12;
+  optional int64 direct_project_id = 13;
+  optional string tc_direct_project_name = 14;
+}
+
+message GetProjectsResponse {
+  repeated ProjectProto projects = 1;
+}
+
+message GetProjectIdsByDirectIdResponse {
+  repeated int64 project_ids = 1;
+}
+
+message CreateProjectRequest {
+  optional int64 project_id = 1;
+  optional int64 project_status_id = 2;
+  optional int64 project_category_id = 3;
+  optional string create_user = 4;
+  optional string modify_user = 5;
+  optional int64 direct_project_id = 6;
+}
+
+message UpdateProjectRequest {
+  optional int64 project_id = 1;
+  optional int64 project_status_id = 2;
+  optional int64 project_category_id = 3;
+  optional string modify_user = 4;
+  google.protobuf.Timestamp modify_date = 5;
+  optional int64 direct_project_id = 6;
+}
+
+message ProjectIdProto {
+  optional int64 project_id = 1;
+}
+
+message CreateDateProto {
+  google.protobuf.Timestamp create_date = 1;
+}
+
+message ProjectPropertyIdValue {
+  optional int64 project_info_type_id = 1;
+  optional string value = 2;
+}
+
+message GetProjectPropertyIdValueResponse {
+  repeated ProjectPropertyIdValue project_properties = 1;
+}
+
+message GetProjectsPropertiesRequest {
+  repeated int64 project_ids = 1;
+}
+
+message ProjectPropertyProto {
+  optional int64 project_id = 1;
+  optional string name = 2;
+  optional string value = 3;
+}
+
+message GetProjectsPropertiesResponse {
+  repeated ProjectPropertyProto properties = 1;
+}
+
+message CreateProjectPropertyRequest {
+  optional int64 project_id = 1;
+  optional int64 project_info_type_id = 2;
+  optional string value = 3;
+  optional string create_user = 4;
+  optional string modify_user = 5;
+}
+
+message UpdateProjectPropertyRequest {
+  optional int64 project_id = 1;
+  optional int64 project_info_type_id = 2;
+  optional string value = 3;
+  optional string modify_user = 4;
+}
+
+message DeleteProjectPropertyRequest {
+  optional int64 project_id = 1;
+  repeated int64 project_info_type_ids = 2;
+}
+
+message AuditProjectInfoRequest {
+  optional int64 project_id = 1;
+  optional int64 project_info_type_id = 2;
+  optional string value = 3;
+  optional int32 audit_type = 4;
+  optional string action_user_id = 5;
+}
+
+message AuditProjectRequest {
+  optional int64 project_audit_id = 1;
+  optional int64 project_id = 2;
+  optional string update_reason = 3;
+  optional string create_user = 4;
+  optional string modify_user = 5;
+}
+
+message FileTypeProto {
+  optional int64 file_type_id = 1;
+  optional string description = 2;
+  optional int32 sort = 3;
+  optional bool image_file = 4;
+  optional string extension = 5;
+  optional bool bundled_file = 6;
+}
+
+message GetProjectFileTypesResponse {
+  repeated FileTypeProto file_types = 1;
+}
+
+message CreateProjectFileTypeRequest {
+  optional int64 project_id = 1;
+  optional int64 file_type_id = 2;
+}
+
+message DeleteProjectFileTypeRequest {
+  optional int64 project_id = 1;
+}
+
+message CreateFileTypeRequest {
+  optional int64 file_type_id = 1;
+  optional string description = 2;
+  optional int32 sort = 3;
+  optional bool image_file = 4;
+  optional string extension = 5;
+  optional bool bundled_file = 6;
+  optional string create_user = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message UpdateFileTypeRequest {
+  optional int64 file_type_id = 1;
+  optional string description = 2;
+  optional int32 sort = 3;
+  optional bool image_file = 4;
+  optional string extension = 5;
+  optional bool bundled_file = 6;
+  optional string modify_user = 7;
+  google.protobuf.Timestamp modify_date = 8;
+}
+
+message IdProto {
+  optional int64 id = 1;
+}
+
+message ExistsProto {
+  bool exists = 1;
+}
+
+message ProjectPrizeProto {
+  optional int64 prize_id = 1;
+  optional int64 project_id = 2;
+  optional int32 place = 3;
+  optional double prize_amount = 4;
+  optional int32 number_of_submissions = 5;
+  optional int64 prize_type_id = 6;
+  optional string prize_type_desc = 7;
+}
+
+message GetProjectPrizesResponse {
+  repeated ProjectPrizeProto prizes = 1;
+}
+
+message CreatePrizeRequest {
+  optional int64 prize_id = 1;
+  optional int64 project_id = 2;
+  optional int32 place = 3;
+  optional double prize_amount = 4;
+  optional int64 prize_type_id = 5;
+  optional int32 number_of_submissions = 6;
+  optional string create_user = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message UpdatePrizeRequest {
+  optional int64 prize_id = 1;
+  optional int64 project_id = 2;
+  optional int32 place = 3;
+  optional double prize_amount = 4;
+  optional int64 prize_type_id = 5;
+  optional int32 number_of_submissions = 6;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message DeletePrizeRequest {
+  optional int64 prize_id = 1;
+}
+
+message GetPrizeProjectIdsRequest {
+  optional int64 prize_id = 1;
+}
+
+message GetPrizeProjectIdsResponse {
+  repeated int64 ids = 1;
+}
+
+message GetProjectStudioSpecResponse {
+  optional int64 project_studio_spec_id = 1;
+  optional string goals = 2;
+  optional string target_audience = 3;
+  optional string branding_guidelines = 4;
+  optional string disliked_design_websites = 5;
+  optional string other_instructions = 6;
+  optional string winning_criteria = 7;
+  optional bool submitters_locked_between_rounds = 8;
+  optional string round_one_introduction = 9;
+  optional string round_two_introduction = 10;
+  optional string colors = 11;
+  optional string fonts = 12;
+  optional string layout_and_size = 13;
+}
+
+message CreateStudioSpecRequest {
+  optional int64 project_studio_spec_id = 1;
+  optional string goals = 2;
+  optional string target_audience = 3;
+  optional string branding_guidelines = 4;
+  optional string disliked_design_websites = 5;
+  optional string other_instructions = 6;
+  optional string winning_criteria = 7;
+  optional bool submitters_locked_between_rounds = 8;
+  optional string round_one_introduction = 9;
+  optional string round_two_introduction = 10;
+  optional string colors = 11;
+  optional string fonts = 12;
+  optional string layout_and_size = 13;
+  optional string create_user = 14;
+  google.protobuf.Timestamp create_date = 15;
+  optional string modify_user = 16;
+  google.protobuf.Timestamp modify_date = 17;
+}
+
+message UpdateStudioSpecRequest {
+  optional int64 project_studio_spec_id = 1;
+  optional string goals = 2;
+  optional string target_audience = 3;
+  optional string branding_guidelines = 4;
+  optional string disliked_design_websites = 5;
+  optional string other_instructions = 6;
+  optional string winning_criteria = 7;
+  optional bool submitters_locked_between_rounds = 8;
+  optional string round_one_introduction = 9;
+  optional string round_two_introduction = 10;
+  optional string colors = 11;
+  optional string fonts = 12;
+  optional string layout_and_size = 13;
+  optional string modify_user = 14;
+  google.protobuf.Timestamp modify_date = 15;
+}
+
+message DeleteStudioSpecRequest {
+  optional int64 project_studio_spec_id = 1;
+}
+
+message GetStudioSpecProjectIdsRequest {
+  optional int64 project_studio_spec_id = 1;
+}
+
+message GetStudioSpecProjectIdsResponse {
+  repeated int64 project_ids = 1;
+}
+
+message RemoveStudioSpecFromProjectsRequest {
+  optional int64 project_studio_spec_id = 1;
+}
+
+service ProjectService {
+  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse);
+  rpc GetProjectIdsByDirectId(IdProto) returns (GetProjectIdsByDirectIdResponse);
+  rpc CreateProject(CreateProjectRequest) returns (CountProto);
+  rpc UpdateProject(UpdateProjectRequest) returns (CountProto);
+  rpc GetProjectCreateDate(ProjectIdProto) returns (CreateDateProto);
+  rpc GetProjectPropertyIdValue(IdProto) returns (GetProjectPropertyIdValueResponse);
+  rpc GetProjectsProperties(GetProjectsPropertiesRequest) returns (GetProjectsPropertiesResponse);
+  rpc CreateProjectProperty(CreateProjectPropertyRequest) returns (CountProto);
+  rpc UpdateProjectProperty(UpdateProjectPropertyRequest) returns (CountProto);
+  rpc DeleteProjectProperty(DeleteProjectPropertyRequest) returns (CountProto);
+  rpc AuditProjectInfo(AuditProjectInfoRequest) returns (CountProto);
+  rpc AuditProject(AuditProjectRequest) returns (CountProto);
+  rpc GetProjectFileTypes(ProjectIdProto) returns (GetProjectFileTypesResponse);
+  rpc CreateProjectFileType(CreateProjectFileTypeRequest) returns (CountProto);
+  rpc DeleteProjectFileType(DeleteProjectFileTypeRequest) returns (CountProto);
+  rpc CreateFileType(CreateFileTypeRequest) returns (CountProto);
+  rpc UpdateFileType(UpdateFileTypeRequest) returns (CountProto);
+  rpc IsProjectExists(IdProto) returns (ExistsProto);
+  rpc IsFileTypeExists(IdProto) returns (ExistsProto);
+  rpc IsPrizeExists(IdProto) returns (ExistsProto);
+  rpc IsStudioSpecExists(IdProto) returns (ExistsProto);
+  rpc GetProjectPrizes(ProjectIdProto) returns (GetProjectPrizesResponse);
+  rpc CreatePrize(CreatePrizeRequest) returns (CountProto);
+  rpc UpdatePrize(UpdatePrizeRequest) returns (CountProto);
+  rpc DeletePrize(DeletePrizeRequest) returns (CountProto);
+  rpc GetPrizeProjectIds(GetPrizeProjectIdsRequest) returns (GetPrizeProjectIdsResponse);
+  rpc GetProjectStudioSpec(ProjectIdProto) returns (GetProjectStudioSpecResponse);
+  rpc CreateStudioSpec(CreateStudioSpecRequest) returns (CountProto);
+  rpc UpdateStudioSpec(UpdateStudioSpecRequest) returns (CountProto);
+  rpc DeleteStudioSpec(DeleteStudioSpecRequest) returns (CountProto);
+  rpc GetStudioSpecProjectIds(GetStudioSpecProjectIdsRequest) returns (GetStudioSpecProjectIdsResponse);
+  rpc RemoveStudioSpecFromProjects(RemoveStudioSpecFromProjectsRequest) returns (CountProto);
+}
