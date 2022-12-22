@@ -9,19 +9,20 @@ option java_multiple_files = true;
 option java_package = "com.topcoder.onlinereview.grpc.project.proto";
 option java_outer_classname = "ProjectProtos";
 
+message ProjectIdProto {
+  optional int64 project_id = 1;
+}
+
+message IdProto {
+  optional int64 id = 1;
+}
+
+message IdListProto {
+  repeated int64 ids = 1;
+}
+
 message CountProto {
   int32 count = 1;
-}
-
-message CreateProjectRequest {
-  ProjectProto project = 1;
-  optional string operator = 2;
-}
-
-message UpdateProjectRequest {
-  ProjectProto project = 1;
-  optional string reason = 2;
-  optional string operator = 3;
 }
 
 message ProjectProto {
@@ -118,6 +119,71 @@ message FileTypeProto {
   google.protobuf.Timestamp modify_date = 10;
 }
 
+message UserProjectTypeProto {
+  int64 id = 1;
+  string name = 2;
+  int32 count = 3;
+  repeated UserProjectCategoryProto categories = 4;
+}
+
+message UserProjectCategoryProto {
+  int64 id = 1;
+  string name = 2;
+  int32 count = 3;
+}
+
+message GetProjectsRequest {
+  repeated int64 project_ids = 1;
+}
+
+message GetProjectsResponse {
+  repeated ProjectProto projects = 1;
+}
+
+message CountUserProjectsRequest {
+  optional int64 user_id = 1;
+  optional int64 project_status_id = 2;
+  optional bool is_my_projects = 3;
+  optional bool has_manager_role = 4;
+}
+
+message CountUserProjectsResponse {
+  repeated UserProjectTypeProto user_project_types = 1;
+}
+
+message GetAllProjectsRequest {
+  optional int64 user_id = 1;
+  optional int64 project_status_id = 2;
+  optional int32 page = 3;
+  optional int32 per_page = 4;
+  optional int64 category_id = 5;
+  optional bool is_my_projects = 6;
+  optional bool has_manager_role = 7;
+}
+
+message GetAllProjectsResponse {
+  repeated ProjectProto projects = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+message SearchProjectsResponse {
+  repeated ProjectProto projects = 1;
+}
+
+message CreateProjectRequest {
+  ProjectProto project = 1;
+  optional string operator = 2;
+}
+
+message UpdateProjectRequest {
+  ProjectProto project = 1;
+  optional string reason = 2;
+  optional string operator = 3;
+}
+
 message GetProjectIdsByDirectIdResponse {
   repeated int64 project_ids = 1;
 }
@@ -150,6 +216,16 @@ message UpdateProjectPrizesResponse {
   repeated PrizeProto prizes = 1;
 }
 
+message GetProjectStudioSpecResponse {
+  ProjectStudioSpecProto project_studio_spec = 1;
+}
+
+message UpdateProjectStudioSpecRequest {
+  optional int64 project_id = 1;
+  ProjectStudioSpecProto project_studio_spec = 2;
+  optional string operator = 3;
+}
+
 message CreateFileTypeRequest {
   FileTypeProto file_type = 1;
   optional string operator = 2;
@@ -163,14 +239,6 @@ message UpdateFileTypeRequest {
 message DeleteFileTypeRequest {
   optional int64 file_type_id = 1;
   optional string operator = 2;
-}
-
-message GetAllFileTypesResponse {
-  repeated FileTypeProto file_types = 1;
-}
-
-message GetAllPrizeTypesResponse {
-  repeated PrizeTypeProto prize_types = 1;
 }
 
 message CreatePrizeRequest {
@@ -203,16 +271,6 @@ message DeleteStudioSpecRequest {
   optional string operator = 2;
 }
 
-message GetProjectStudioSpecResponse {
-  ProjectStudioSpecProto project_studio_spec = 1;
-}
-
-message UpdateProjectStudioSpecRequest {
-  optional int64 project_id = 1;
-  ProjectStudioSpecProto project_studio_spec = 2;
-  optional string operator = 3;
-}
-
 message ProjectPropertyTypeProto {
   optional int64 id = 1;
   optional string name = 2;
@@ -235,23 +293,20 @@ message GetAllProjectStatusesResponse {
   repeated ProjectStatusProto project_statuses = 1;
 }
 
-message GetProjectsRequest {
-  repeated int64 project_ids = 1;
+message GetAllFileTypesResponse {
+  repeated FileTypeProto file_types = 1;
 }
 
-message GetProjectsResponse {
-  repeated ProjectProto projects = 1;
-}
-
-message ProjectIdProto {
-  optional int64 project_id = 1;
-}
-
-message IdProto {
-  optional int64 id = 1;
+message GetAllPrizeTypesResponse {
+  repeated PrizeTypeProto prize_types = 1;
 }
 
 service ProjectService {
+  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse);
+  rpc CountUserProjects(CountUserProjectsRequest) returns (CountUserProjectsResponse);
+  rpc GetAllProjects(GetAllProjectsRequest) returns (GetAllProjectsResponse);
+  rpc SearchProjectsForAutopilot(google.protobuf.Empty) returns (IdListProto);
+  rpc SearchProjects(FilterProto) returns (SearchProjectsResponse);
   rpc CreateProject(CreateProjectRequest) returns (ProjectProto);
   rpc UpdateProject(UpdateProjectRequest) returns (ProjectProto);
   rpc GetProjectIdsByDirectId(IdProto) returns (GetProjectIdsByDirectIdResponse);
@@ -259,22 +314,21 @@ service ProjectService {
   rpc UpdateProjectFileTypes(UpdateProjectFileTypesRequest) returns (UpdateProjectFileTypesResponse);
   rpc GetProjectPrizes(ProjectIdProto) returns (GetProjectPrizesResponse);
   rpc UpdateProjectPrizes(UpdateProjectPrizesRequest) returns (UpdateProjectPrizesResponse);
+  rpc GetProjectStudioSpec(ProjectIdProto) returns (GetProjectStudioSpecResponse);
+  rpc UpdateProjectStudioSpec(UpdateProjectStudioSpecRequest) returns (ProjectStudioSpecProto);
   rpc CreateFileType(CreateFileTypeRequest) returns (FileTypeProto);
   rpc UpdateFileType(UpdateFileTypeRequest) returns (FileTypeProto);
   rpc DeleteFileType(DeleteFileTypeRequest) returns (CountProto);
-  rpc GetAllFileTypes(google.protobuf.Empty) returns (GetAllFileTypesResponse);
-  rpc GetAllPrizeTypes(google.protobuf.Empty) returns (GetAllPrizeTypesResponse);
   rpc CreatePrize(CreatePrizeRequest) returns (PrizeProto);
   rpc UpdatePrize(UpdatePrizeRequest) returns (PrizeProto);
   rpc DeletePrize(DeletePrizeRequest) returns (CountProto);
   rpc CreateStudioSpec(CreateStudioSpecRequest) returns (ProjectStudioSpecProto);
   rpc UpdateStudioSpec(UpdateStudioSpecRequest) returns (ProjectStudioSpecProto);
   rpc DeleteStudioSpec(DeleteStudioSpecRequest) returns (CountProto);
-  rpc GetProjectStudioSpec(ProjectIdProto) returns (GetProjectStudioSpecResponse);
-  rpc UpdateProjectStudioSpec(UpdateProjectStudioSpecRequest) returns (ProjectStudioSpecProto);
   rpc GetAllProjectPropertyTypes(google.protobuf.Empty) returns (GetAllProjectPropertyTypesResponse);
   rpc GetAllProjectTypes(google.protobuf.Empty) returns (GetAllProjectTypesResponse);
   rpc GetAllProjectCategories(google.protobuf.Empty) returns (GetAllProjectCategoriesResponse);
   rpc GetAllProjectStatuses(google.protobuf.Empty) returns (GetAllProjectStatusesResponse);
-  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse);
+  rpc GetAllFileTypes(google.protobuf.Empty) returns (GetAllFileTypesResponse);
+  rpc GetAllPrizeTypes(google.protobuf.Empty) returns (GetAllPrizeTypesResponse);
 }
