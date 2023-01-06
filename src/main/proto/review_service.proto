@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package review;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.review.proto";
+option java_outer_classname = "ReviewProtos";
+
+message IdProto {
+  optional int64 id = 1;
+}
+
+message ExistsProto {
+  bool exists = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ReviewIdProto {
+  optional int64 review_id = 1;
+}
+
+message ReviewIdsProto {
+  repeated int64 review_ids = 1;
+}
+
+message ReviewCommentIdsProto {
+  repeated int64 review_comment_ids = 1;
+}
+
+message ReviewItemIdProto {
+  optional int64 review_item_id = 1;
+}
+
+message ReviewItemIdsProto {
+  repeated int64 review_item_ids = 1;
+}
+
+message ReviewItemCommentIdsProto {
+  repeated int64 review_item_comment_ids = 1;
+}
+
+message IdListProto {
+  repeated int64 ids = 1;
+}
+
+message ReviewProto {
+  optional int64 review_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 submission_id = 3;
+  optional int64 project_phase_id = 4;
+  optional int64 scorecard_id = 5;
+  optional bool committed = 6;
+  optional double score = 7;
+  optional double initial_score = 8;
+  optional string create_user = 9;
+  google.protobuf.Timestamp create_date = 10;
+  optional string modify_user = 11;
+  google.protobuf.Timestamp modify_date = 12;
+}
+
+message ReviewCommentProto {
+  optional int64 review_comment_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 review_id = 3;
+  optional int64 comment_type_id = 4;
+  optional string content = 5;
+  optional string extra_info = 6;
+  optional int64 sort = 7;
+  optional string create_user = 8;
+  google.protobuf.Timestamp create_date = 9;
+  optional string modify_user = 10;
+  google.protobuf.Timestamp modify_date = 11;
+}
+
+message ReviewItemProto {
+  optional int64 review_item_id = 1;
+  optional int64 review_id = 2;
+  optional int64 scorecard_question_id = 3;
+  optional int64 upload_id = 4;
+  optional string answer = 5;
+  optional int64 sort = 6;
+  optional string create_user = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message ReviewItemCommentProto {
+  optional int64 review_item_comment_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 review_item_id = 3;
+  optional int64 comment_type_id = 4;
+  optional string content = 5;
+  optional string extra_info = 6;
+  optional int64 sort = 7;
+  optional string create_user = 8;
+  google.protobuf.Timestamp create_date = 9;
+  optional string modify_user = 10;
+  google.protobuf.Timestamp modify_date = 11;
+}
+
+message CommentTypeProto {
+  optional int64 comment_type_id = 1;
+  optional string name = 2;
+}
+
+message GetReviewsResponse {
+  repeated ReviewProto reviews = 1;
+}
+
+message GetReviewCommentsResponse {
+  repeated ReviewCommentProto review_comments = 1;
+}
+
+message GetReviewItemsResponse {
+  repeated ReviewItemProto review_items = 1;
+}
+
+message GetReviewItemCommentsResponse {
+  repeated ReviewItemCommentProto review_item_comments = 1;
+}
+
+message GetAllCommentTypesResponse {
+  repeated CommentTypeProto comment_types = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+service ReviewService {
+  rpc IsReviewExists(ReviewIdProto) returns (ExistsProto);
+  rpc IsReviewItemExists(ReviewItemIdProto) returns (ExistsProto);
+  rpc CountReviewComments(ReviewIdProto) returns (CountProto);
+  rpc CountReviewItemComments(ReviewItemIdProto) returns (CountProto);
+  rpc GetReviews(ReviewIdsProto) returns (GetReviewsResponse);
+  rpc GetReviewComments(ReviewIdsProto) returns (GetReviewCommentsResponse);
+  rpc GetReviewCommentsWithNoContent(ReviewIdsProto) returns (GetReviewCommentsResponse);
+  rpc GetReviewItems(ReviewIdsProto) returns (GetReviewItemsResponse);
+  rpc GetReviewItemComments(ReviewIdsProto) returns (GetReviewItemCommentsResponse);
+  rpc GetReviewItemCommentsWithNoContent(ReviewIdsProto) returns (GetReviewItemCommentsResponse);
+  rpc GetAllCommentTypes(google.protobuf.Empty) returns (GetAllCommentTypesResponse);
+  rpc GetReviewCommentIds(ReviewIdProto) returns (IdListProto);
+  rpc GetReviewItemIds(ReviewIdProto) returns (IdListProto);
+  rpc GetReviewItemCommentIds(ReviewItemIdProto) returns (IdListProto);
+  rpc GetReviewItemsUploadIds(ReviewItemIdsProto) returns (IdListProto);
+  rpc CreateReview(ReviewProto) returns (IdProto);
+  rpc CreateReviewComment(ReviewCommentProto) returns (IdProto);
+  rpc CreateReviewItem(ReviewItemProto) returns (IdProto);
+  rpc CreateReviewItemComment(ReviewItemCommentProto) returns (IdProto);
+  rpc UpdateReview(ReviewProto) returns (CountProto);
+  rpc UpdateReviewComment(ReviewCommentProto) returns (CountProto);
+  rpc UpdateReviewItem(ReviewItemProto) returns (CountProto);
+  rpc UpdateReviewItemComment(ReviewItemCommentProto) returns (CountProto);
+  rpc DeleteReview(ReviewIdProto) returns (CountProto);
+  rpc DeleteReviewComments(ReviewCommentIdsProto) returns (CountProto);
+  rpc DeleteReviewItems(ReviewItemIdsProto) returns (CountProto);
+  rpc DeleteReviewItemComments(ReviewItemCommentIdsProto) returns (CountProto);
+  rpc SearchReviews(FilterProto) returns (GetReviewsResponse);
+}
