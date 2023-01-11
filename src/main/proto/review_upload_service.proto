@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package reviewupload;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.reviewupload.proto";
+option java_outer_classname = "ReviewUploadProtos";
+
+message ExistsProto {
+  bool exists = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ProjectUserRequest {
+  optional int64 project_id = 1;
+  optional string user_id = 2;
+}
+
+message RatingProto {
+  optional int64 rating = 1;
+}
+
+message ProjectResultProto {
+  optional int64 project_id = 1;
+  optional string user_id = 2;
+  optional int64 rating_ind = 3;
+  optional int64 valid_submission_ind = 4;
+  optional double old_rating = 5;
+}
+
+message ComponentInquiryProto {
+  optional int64 component_inquiry_id = 1;
+  optional int64 component_id = 2;
+  optional string user_id = 3;
+  optional int64 project_id = 4;
+  optional int64 phase = 5;
+  optional string tc_user_id = 6;
+  optional int64 agreed_to_terms = 7;
+  optional double rating = 8;
+  optional int64 version = 9;
+}
+
+message NextIdProto {
+  optional int64 current_value = 1;
+}
+
+message UpdateNextIdRequest {
+  optional int64 new_current_value = 1;
+  optional int64 old_current_value = 2;
+}
+
+service ReviewUploadService {
+  rpc IsProjectResultExists(ProjectUserRequest) returns (ExistsProto);
+  rpc IsComponentInquiryExists(ProjectUserRequest) returns (ExistsProto);
+  rpc GetUserRating(ProjectUserRequest) returns (RatingProto);
+  rpc CreateProjectResult(ProjectResultProto) returns (CountProto);
+  rpc CreateComponentInquiry(ComponentInquiryProto) returns (CountProto);
+  rpc GetNextId(google.protobuf.Empty) returns (NextIdProto);
+  rpc UpdateNextId(UpdateNextIdRequest) returns (CountProto);
+}
