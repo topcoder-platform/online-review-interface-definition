@@ -1,0 +1,204 @@
+syntax = "proto3";
+
+package termsofuse;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.termsofuse.proto";
+option java_outer_classname = "TermsOfUseProtos";
+
+message CountProto {
+  int32 count = 1;
+}
+
+message CreateProjectRoleTermsOfUseRequest {
+  optional int32 project_id = 1;
+  optional int32 resource_role_id = 2;
+  optional int64 terms_of_use_id = 3;
+  optional int32 sort_order = 4;
+  optional int32 group_ind = 5;
+}
+
+message DeleteProjectRoleTermsOfUseRequest {
+  optional int32 project_id = 1;
+  optional int32 resource_role_id = 2;
+  optional int64 terms_of_use_id = 3;
+  optional int32 group_ind = 4;
+}
+
+message GetProjectRoleTermsOfUseRequest {
+  optional int32 project_id = 1;
+  optional int32 resource_role_id = 2;
+}
+
+message ProjectRoleTermsOfUseProto {
+  optional int64 terms_of_use_id = 1;
+  optional int32 sort_order = 2;
+  optional int32 group_ind = 3;
+  optional int32 terms_of_use_type_id = 4;
+  optional string title = 5;
+  optional string url = 6;
+  optional int32 terms_of_use_agreeability_type_id = 7;
+  optional string terms_of_use_agreeability_type_name = 8;
+  optional string terms_of_use_agreeability_type_description = 9;
+}
+
+message GetProjectRoleTermsOfUseResponse {
+  repeated ProjectRoleTermsOfUseProto project_role_terms_of_uses = 1;
+}
+
+message ProjectIdProto {
+  optional int32 project_id = 1;
+}
+
+message CreateTermsOfUseRequest {
+  optional string terms_text = 1;
+  optional int32 terms_of_use_type_id = 2;
+  optional string title = 3;
+  optional string url = 4;
+  optional int32 terms_of_use_agreeability_type_id = 5;
+}
+
+message TermsOfUseIdProto {
+  optional int64 terms_of_use_id = 1;
+}
+
+message TermsOfUseTypeIdProto {
+  optional int64 terms_of_use_type_id = 1;
+}
+
+message UpdateTermsOfUseRequest {
+  optional int64 terms_of_use_id = 1;
+  optional int32 terms_of_use_type_id = 2;
+  optional string title = 3;
+  optional string url = 4;
+  optional int32 terms_of_use_agreeability_type_id = 5;
+}
+
+message GetTermsOfUseResponse {
+  optional int64 terms_of_use_id = 1;
+  optional int32 terms_of_use_type_id = 2;
+  optional string title = 3;
+  optional string url = 4;
+  optional int32 terms_of_use_agreeability_type_id = 5;
+  optional string terms_of_use_agreeability_type_name = 6;
+  optional string terms_of_use_agreeability_type_description = 7;
+}
+
+message GetTermsOfUseByTypeIdResponse {
+  repeated GetTermsOfUseResponse terms_of_uses = 1;
+}
+
+message GetAllTermsOfUseResponse {
+  repeated GetTermsOfUseResponse terms_of_uses = 1;
+}
+
+message TermsOfUseTypeProto {
+  optional int32 terms_of_use_type_id = 1;
+  optional string terms_of_use_type_desc = 2;
+}
+
+message GetTermsOfUseTextResponse {
+  optional string terms_text = 1;
+}
+
+message SetTermsOfUseTextRequest {
+  optional int64 terms_of_use_id = 1;
+  optional string terms_text = 2;
+}
+
+message CreateDependencyRelationshipRequest {
+  optional int64 dependency_terms_of_use_id = 1;
+  optional int64 dependent_terms_of_use_id = 2;
+}
+
+message DependentTermsOfUseIdProto {
+  optional int64 dependent_terms_of_use_id = 1;
+}
+
+message GetDependencyTermsOfUseResponse {
+  repeated GetTermsOfUseResponse terms_of_uses = 1;
+}
+
+message DependencyTermsOfUseIdProto {
+  optional int64 dependency_terms_of_use_id = 1;
+}
+
+message GetDependentTermsOfUseResponse {
+  repeated GetTermsOfUseResponse terms_of_uses = 1;
+}
+
+message DeleteDependencyRelationshipRequest {
+  optional int64 dependency_terms_of_use_id = 1;
+  optional int64 dependent_terms_of_use_id = 2;
+}
+
+message GetDependencyTermsOfUseIdsRequest {
+  repeated int64 dependent_terms_of_use_ids = 1;
+}
+
+message GetDependencyTermsOfUseIdsResponse {
+  repeated int64 dependency_terms_of_use_ids = 1;
+}
+
+message CreateUserTermsOfUseRequest {
+  optional int64 user_id = 1;
+  optional int64 terms_of_use_id = 2;
+}
+
+message DeleteUserTermsOfUseRequest {
+  optional int64 user_id = 1;
+  optional int64 terms_of_use_id = 2;
+}
+
+message UserIdProto {
+  optional int64 user_id = 1;
+}
+
+message GetTermsOfUseByUserIdResponse {
+  repeated GetTermsOfUseResponse terms_of_uses = 1;
+}
+
+message GetUsersByTermsOfUseIdResponse {
+  repeated int64 user_ids = 1;
+}
+
+message ExistsProto {
+  bool exists = 1;
+}
+
+message TermsOfUseExistsRequest {
+  optional int64 user_id = 1;
+  optional int64 terms_of_use_id = 2;
+}
+
+service TermsOfUseService {
+  rpc CreateProjectRoleTermsOfUse(CreateProjectRoleTermsOfUseRequest) returns (CountProto);
+  rpc DeleteProjectRoleTermsOfUse(DeleteProjectRoleTermsOfUseRequest) returns (CountProto);
+  rpc GetProjectRoleTermsOfUse(GetProjectRoleTermsOfUseRequest) returns (GetProjectRoleTermsOfUseResponse);
+  rpc DeleteAllProjectRoleTermsOfUse(ProjectIdProto) returns (CountProto);
+  rpc CreateTermsOfUse(CreateTermsOfUseRequest) returns (TermsOfUseIdProto);
+  rpc UpdateTermsOfUse(UpdateTermsOfUseRequest) returns (CountProto);
+  rpc GetTermsOfUse(TermsOfUseIdProto) returns (GetTermsOfUseResponse);
+  rpc DeleteTermsOfUse(TermsOfUseIdProto) returns (CountProto);
+  rpc GetTermsOfUseByTypeId(TermsOfUseTypeIdProto) returns (GetTermsOfUseByTypeIdResponse);
+  rpc GetAllTermsOfUse(google.protobuf.Empty) returns (GetAllTermsOfUseResponse);
+  rpc GetTermsOfUseType(TermsOfUseTypeIdProto) returns (TermsOfUseTypeProto);
+  rpc UpdateTermsOfUseType(TermsOfUseTypeProto) returns (CountProto);
+  rpc GetTermsOfUseText(TermsOfUseIdProto) returns (GetTermsOfUseTextResponse);
+  rpc SetTermsOfUseText(SetTermsOfUseTextRequest) returns (CountProto);
+  rpc CreateDependencyRelationship(CreateDependencyRelationshipRequest) returns (CountProto);
+  rpc GetDependencyTermsOfUse(DependentTermsOfUseIdProto) returns (GetDependencyTermsOfUseResponse);
+  rpc GetDependentTermsOfUse(DependencyTermsOfUseIdProto) returns (GetDependentTermsOfUseResponse);
+  rpc DeleteDependencyRelationship(DeleteDependencyRelationshipRequest) returns (CountProto);
+  rpc DeleteAllDependencyRelationshipsForDependent(DependentTermsOfUseIdProto) returns (CountProto);
+  rpc DeleteAllDependencyRelationshipsForDependency(DependencyTermsOfUseIdProto) returns (CountProto);
+  rpc GetDependencyTermsOfUseIds(GetDependencyTermsOfUseIdsRequest) returns (GetDependencyTermsOfUseIdsResponse);
+  rpc CreateUserTermsOfUse(CreateUserTermsOfUseRequest) returns (CountProto);
+  rpc DeleteUserTermsOfUse(DeleteUserTermsOfUseRequest) returns (CountProto);
+  rpc GetTermsOfUseByUserId(UserIdProto) returns (GetTermsOfUseByUserIdResponse);
+  rpc GetUsersByTermsOfUseId(TermsOfUseIdProto) returns (GetUsersByTermsOfUseIdResponse);
+  rpc IsTermsOfUseExists(TermsOfUseExistsRequest) returns (ExistsProto);
+  rpc IsTermsOfUseBanExists(TermsOfUseExistsRequest) returns (ExistsProto);
+}
