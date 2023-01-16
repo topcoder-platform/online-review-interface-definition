@@ -142,12 +142,12 @@ message FilterProto {
 }
 
 service UploadService {
-  rpc AddUploadType(EntityProto) returns (google.protobuf.Empty);
-  rpc AddUploadStatus(EntityProto) returns (google.protobuf.Empty);
-  rpc AddSubmissionType(EntityProto) returns (google.protobuf.Empty);
-  rpc AddSubmissionStatus(EntityProto) returns (google.protobuf.Empty);
-  rpc AddUpload(UploadProto) returns (google.protobuf.Empty);
-  rpc AddSubmission(SubmissionProto) returns (google.protobuf.Empty);
+  rpc AddUploadType(EntityProto) returns (IdProto);
+  rpc AddUploadStatus(EntityProto) returns (IdProto);
+  rpc AddSubmissionType(EntityProto) returns (IdProto);
+  rpc AddSubmissionStatus(EntityProto) returns (IdProto);
+  rpc AddUpload(UploadProto) returns (IdProto);
+  rpc AddSubmission(SubmissionProto) returns (IdProto);
   rpc AddSubmissionImage(SubmissionImageProto) returns (google.protobuf.Empty);
   rpc RemoveUploadType(IdProto) returns (google.protobuf.Empty);
   rpc RemoveUploadStatus(IdProto) returns (google.protobuf.Empty);
