@@ -102,6 +102,14 @@ message GetDefaultPaymentResponse {
   DefaultPaymentProto default_payment = 1;
 }
 
+message FilterProto {
+  bytes filter = 1;
+}
+
+message SearchPaymentsResponse {
+  repeated ProjectPaymentProto payments = 1;
+}
+
 service PaymentService {
   rpc CreatePayment(CreatePaymentRequest) returns (IdProto);
   rpc UpdatePayment(UpdatePaymentRequest) returns (CountProto);
@@ -116,4 +124,5 @@ service PaymentService {
   rpc IsSubmissionExists(IdProto) returns (ExistsProto);
   rpc GetDefaultPayments(GetDefaultPaymentsRequest) returns (GetDefaultPaymentsResponse);
   rpc GetDefaultPayment(GetDefaultPaymentRequest) returns (GetDefaultPaymentResponse);
+  rpc SearchPayments(FilterProto) returns (SearchPaymentsResponse);
 }
