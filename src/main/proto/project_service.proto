@@ -301,6 +301,42 @@ message GetAllPrizeTypesResponse {
   repeated PrizeTypeProto prize_types = 1;
 }
 
+message ProjectLinkTypeProto {
+  optional int64 link_type_id = 1;
+  optional string link_type_name = 2;
+  optional bool allow_overlap = 3;
+}
+
+message GetAllProjectLinkTypesResponse {
+  repeated ProjectLinkTypeProto project_link_types = 1;
+}
+
+message ProjectLinkProto {
+  optional int64 source_project_id = 1;
+  optional int64 dest_project_id = 2;
+  optional int64 link_type_id = 3;
+}
+
+message GetDestProjectLinksRequest {
+  optional int64 source_project_id = 1;
+}
+
+message GetDestProjectLinksResponse {
+  repeated ProjectLinkProto project_links = 1;
+}
+
+message GetSourceProjectLinksRequest {
+  optional int64 dest_project_id = 1;
+}
+
+message GetSourceProjectLinksResponse {
+  repeated ProjectLinkProto project_links = 1;
+}
+
+message DeleteProjectLinksBySourceIdRequest {
+  optional int64 source_project_id = 1;
+}
+
 service ProjectService {
   rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse);
   rpc CountUserProjects(CountUserProjectsRequest) returns (CountUserProjectsResponse);
@@ -331,4 +367,9 @@ service ProjectService {
   rpc GetAllProjectStatuses(google.protobuf.Empty) returns (GetAllProjectStatusesResponse);
   rpc GetAllFileTypes(google.protobuf.Empty) returns (GetAllFileTypesResponse);
   rpc GetAllPrizeTypes(google.protobuf.Empty) returns (GetAllPrizeTypesResponse);
+  rpc GetAllProjectLinkTypes(google.protobuf.Empty) returns (GetAllProjectLinkTypesResponse);
+  rpc GetDestProjectLinks(GetDestProjectLinksRequest) returns (GetDestProjectLinksResponse);
+  rpc GetSourceProjectLinks(GetSourceProjectLinksRequest) returns (GetSourceProjectLinksResponse);
+  rpc DeleteProjectLinksBySourceId(DeleteProjectLinksBySourceIdRequest) returns (CountProto);
+  rpc CreateProjectLink(ProjectLinkProto) returns (CountProto);
 }
