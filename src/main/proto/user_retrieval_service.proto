@@ -4,7 +4,7 @@ package userretrieval;
 
 option java_multiple_files = true;
 option java_package = "com.topcoder.onlinereview.grpc.userretrieval.proto";
-option java_outer_classname = "UserRetrieval";
+option java_outer_classname = "UserRetrievalProtos";
 
 message UserIdsRequest {
   repeated int64 ids = 1;
