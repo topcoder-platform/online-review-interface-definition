@@ -85,6 +85,25 @@ message DoStartTagResponse {
   repeated ParameterListProto parameter_lists = 1;
 }
 
+message GetDataTypeMappingsResponse {
+  repeated DataTypeMappingProto data_type_mappings = 1;
+}
+
+message DataTypeMappingProto {
+  optional string data_type_id = 1;
+  optional string language_id = 2;
+  optional string display_value = 3;
+}
+
+message GetDataTypesResponse {
+  repeated DataTypeProto data_types = 1;
+}
+
+message DataTypeProto {
+  optional int32 data_type_id = 1;
+  optional string data_type_desc = 2;
+}
+
 service WebCommonService {
   rpc GetUserPassword(GetUserPasswordRequest) returns (GetUserPasswordResponse);
   rpc GetUserTimezone(GetUserTimezoneRequest) returns (GetUserTimezoneResponse);
@@ -92,4 +111,6 @@ service WebCommonService {
   rpc GetMemberImage(GetMemberImageRequest) returns (GetMemberImageResponse);
   rpc GetCoderAllRatings(GetCoderAllRatingsRequest) returns (GetCoderAllRatingsResponse);
   rpc DoStartTag(DoStartTagRequest) returns (DoStartTagResponse);
+  rpc GetDataTypeMappings(google.protobuf.Empty) returns (GetDataTypeMappingsResponse);
+  rpc GetDataTypes(google.protobuf.Empty) returns (GetDataTypesResponse);
 }
