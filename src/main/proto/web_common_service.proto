@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package webcommon;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.webcommon.proto";
+option java_outer_classname = "WebCommonProtos";
+
+message GetUserPasswordRequest {
+  optional int64 user_id = 1;
+}
+
+message GetUserPasswordResponse {
+  optional string password = 1;
+  optional string status = 2;
+}
+
+message GetUserTimezoneRequest {
+  optional int64 user_id = 1;
+}
+
+message GetUserTimezoneResponse {
+  optional string timezone_desc = 1;
+}
+
+message GetMemberCountResponse {
+  optional int32 member_count = 1;
+}
+
+message GetMemberImageRequest {
+  optional int64 user_id = 1;
+}
+
+message GetMemberImageResponse {
+  optional int32 image_id = 1;
+  optional string image_path = 2;
+  optional string file_name = 3;
+}
+
+message GetCoderAllRatingsRequest {
+  optional int64 coder_id = 1;
+}
+
+message GetCoderAllRatingsResponse {
+  CoderRatingsProto coder_ratings = 1;
+}
+
+message CoderRatingsProto {
+  optional int64 coder_id = 1;
+  optional string handle = 2;
+  optional int32 algorithm_rating = 3;
+  optional int32 hs_algorithm_rating = 4;
+  optional int32 marathon_match_rating = 5;
+  optional int32 design_rating = 6;
+  optional int32 development_rating = 7;
+  optional int32 conceptualization_rating = 8;
+  optional int32 specification_rating = 9;
+  optional int32 architecture_rating = 10;
+  optional int32 assembly_rating = 11;
+  optional int32 test_suites_rating = 12;
+  optional int32 test_scenarios_rating = 13;
+  optional int32 ui_prototype_rating = 14;
+  optional int32 ria_build_rating = 15;
+  optional int32 content_creation_rating = 16;
+  optional int32 reporting_rating = 17;
+}
+
+message DoStartTagRequest {
+  optional string command = 1;
+  repeated ParameterProto parameters = 2;
+}
+
+message ParameterProto {
+  optional string key = 1;
+  optional string value = 2;
+}
+
+message ParameterListProto {
+  repeated ParameterProto parameters = 1;
+}
+
+message DoStartTagResponse {
+  repeated ParameterListProto parameter_lists = 1;
+}
+
+service WebCommonService {
+  rpc GetUserPassword(GetUserPasswordRequest) returns (GetUserPasswordResponse);
+  rpc GetUserTimezone(GetUserTimezoneRequest) returns (GetUserTimezoneResponse);
+  rpc GetMemberCount(google.protobuf.Empty) returns (GetMemberCountResponse);
+  rpc GetMemberImage(GetMemberImageRequest) returns (GetMemberImageResponse);
+  rpc GetCoderAllRatings(GetCoderAllRatingsRequest) returns (GetCoderAllRatingsResponse);
+  rpc DoStartTag(DoStartTagRequest) returns (DoStartTagResponse);
+}
