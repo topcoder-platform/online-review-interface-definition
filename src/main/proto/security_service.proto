@@ -1,0 +1,186 @@
+syntax = "proto3";
+
+package security;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.security.proto";
+option java_outer_classname = "SecurityProtos";
+
+message GetGroupMembersRequest {
+  optional int64 user_id = 1;
+}
+
+message GetGroupMembersResponse {
+  repeated GroupMemberProto group_members = 1;
+}
+
+message GroupMemberProto {
+  optional int64 group_member_id = 1;
+  optional int64 user_id = 2;
+  optional int64 group_id = 3;
+  optional bool use_group_default = 4;
+  optional string specific_permission = 5;
+  optional boolean active = 6;
+  google.protobuf.Timestamp activated_on = 7;
+  google.protobuf.Timestamp unassigned_on = 8;
+  optional string group_name = 9;
+  optional string group_default_permission = 10;
+  optional int64 group_client_id = 11;
+  optional boolean group_archived = 12;
+  google.protobuf.Timestamp group_archived_on = 13;
+  optional int64 group_effective_group_id = 14;
+  optional bool group_auto_grant = 15;
+}
+
+message GetDirectProjectsRequest {
+  optional int64 group_id = 1;
+}
+
+message GetDirectProjectsResponse {
+  repeated GroupDirectProjectProto direct_projects = 1;
+}
+
+message GroupDirectProjectProto {
+  optional int64 group_direct_project_id = 1;
+  optional int64 group_id = 2;
+  optional int64 tc_direct_project_id = 3;
+}
+
+message GetBillingAccountsRequest {
+  optional int64 group_id = 1;
+}
+
+message GetBillingAccountsResponse {
+  repeated BillingAccountProto billing_accounts = 1;
+}
+
+message BillingAccountProto {
+  optional int64 project_id = 1;
+  optional int64 company_id = 2;
+  optional string name = 3;
+  optional string description = 4;
+  optional int64 client_id = 5;
+  optional bool is_deleted = 6;
+}
+
+message IsCustomerAdministratorRequest {
+  optional int64 user_id = 1;
+  optional int64 client_id = 2;
+}
+
+message IsCustomerAdministratorResponse {
+  bool is_customer_administrator = 1;
+}
+
+message IsAdministratorRequest {
+  optional int64 user_id = 1;
+}
+
+message IsAdministratorResponse {
+  bool is_administrator = 1;
+}
+
+message GetGroupIdsOfFullPermissionsUserRequest {
+  optional int64 user_id = 1;
+}
+
+message GetGroupIdsOfFullPermissionsUserResponse {
+  repeated int64 group_ids = 1;
+}
+
+message GetBillingAccountRequest {
+  optional int64 id = 1;
+}
+
+message GetBillingAccountResponse {
+  optional int64 project_id = 1;
+  optional int64 company_id = 2;
+  optional string name = 3;
+  optional string description = 4;
+  optional int64 client_id = 5;
+  optional bool is_deleted = 6;
+  optional bool active = 7;
+}
+
+message GetBillingAccountsForClientResponse {
+  repeated BillingAccountForClientProto billing_accounts = 1;
+}
+
+message BillingAccountForClientProto {
+  optional int64 client_id = 1;
+  optional int billing_account_id = 2;
+  optional string client_name = 3;
+  optional string blling_account_name = 4;
+}
+
+message GetProjectNameRequest {
+  optional int64 project_id = 1;
+}
+
+message GetProjectNameResponse {
+  optional string project_name = 1;
+}
+
+message GetProjectNameRequest {
+  optional int64 project_id = 1;
+}
+
+message GetProjectsByClientIdResponse {
+  repeated ProjectByClientIdProto projects = 1;
+}
+
+message ProjectByClientIdProto {
+  optional int64 project_id = 1;
+  optional int64 direct_project_id = 2;
+  optional string direct_project_name = 3;
+}
+
+message GetProjectsByBillingAccountsResponse {
+repeated ProjectByBillingAccountProto projects = 1;
+}
+
+message ProjectByBillingAccountProto {
+  optional int64 billing_account_id = 1;
+  optional int64 direct_project_id = 2;
+  optional string direct_project_name = 3;
+}
+
+message GetUserRolesRequest {
+  optional int64 user_id = 1;
+}
+
+message GetUserRolesResponse {
+  
+}
+
+message UserRoleProto {
+  optional int64 role_id = 1;
+  optional string description = 2;
+}
+
+message IsCloudSpokesUserRequest {
+  optional string handle = 1;
+}
+
+message IsCloudSpokesUserResponse {
+ bool is_cloud_spokes_user = 1; 
+}
+
+service WebCommonService {
+  rpc GetGroupMembers(GetGroupMembersRequest) returns (GetGroupMembersResponse);
+  rpc GetDirectProjects(GetDirectProjectsRequest) returns (GetDirectProjectsResponse);
+  rpc GetBillingAccounts(GetBillingAccountsRequest) returns (GetBillingAccountsResponse);
+  rpc IsCustomerAdministrator(IsCustomerAdministratorRequest) returns (IsCustomerAdministratorResponse);
+  rpc IsAdministrator(IsAdministratorRequest) returns (IsAdministratorResponse);
+  rpc GetGroupIdsOfFullPermissionsUser(GetGroupIdsOfFullPermissionsUserRequest) returns (GetGroupIdsOfFullPermissionsUserResponse);
+  rpc GetBillingAccount(GetBillingAccountRequest) returns (GetBillingAccountResponse);
+  rpc GetBillingAccountsForClient(GetBillingAccountsForClientRequest) returns (GetBillingAccountsForClientResponse);
+  rpc GetProjectName(GetProjectNameRequest) returns (GetProjectNameResponse);
+  rpc GetProjectsByClientId(google.protobuf.Empty) returns (GetProjectsByClientIdResponse);
+  rpc GetProjectsByBillingAccounts(google.protobuf.Empty) returns (GetProjectsByBillingAccountsResponse);
+  rpc GetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse);
+  rpc IsCloudSpokesUser(IsCloudSpokesUserRequest) returns (IsCloudSpokesUserResponse)
+}
