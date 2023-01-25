@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package actionshelper;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.actionshelper.proto";
+option java_outer_classname = "ActionsHelperProtos";
+
+message CountProto {
+  int32 count = 1;
+}
+
+message GetUserPreferenceValueRequest {
+  optional int64 user_id = 1;
+  optional int32 preference_id = 2;
+}
+
+message GetUserPreferenceValueResponse {
+  optional string value = 1;
+}
+
+message IsProjectResultExistsRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message IsProjectResultExistsResponse {
+  optional bool is_project_result_exists = 1;
+}
+
+message IsComponentInquiryExistsRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message IsComponentInquiryExistsResponse {
+  optional bool is_component_inquiry_exists = 1;
+}
+
+message GetRatingsRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message GetRatingsResponse {
+  repeated RatingProto ratings = 1;
+}
+
+message RatingProto {
+  optional int64 project_category_id = 1;
+  optional int64 rating = 2;
+  optional int64 phase_id = 3;
+}
+
+message CreateProjectResultRequest {
+  optional int64 project_id = 1;
+  optional string user_id = 2;
+  optional int64 rating_ind = 3;
+  optional int64 valid_submission_ind = 4;
+  optional double old_rating = 5;
+}
+
+message CreateComponentInquiryRequest {
+  optional int64 component_inquiry_id = 1;
+  optional int64 component_id = 2;
+  optional int64 user_id = 3;
+  optional int64 project_id = 4;
+  optional int64 phase = 5;
+  optional string tc_user_id = 6;
+  optional int64 agreed_to_terms = 7;
+  optional double rating = 8;
+  optional int64 version = 9;
+}
+
+message NextIdProto {
+  optional int64 current_value = 1;
+}
+
+message UpdateNextIdRequest {
+  optional int64 new_current_value = 1;
+  optional int64 old_current_value = 2;
+}
+
+message GetRootCategoryIdByComponentIdRequest {
+  optional string component_id = 1;
+}
+
+message GetRootCategoryIdByComponentIdResponse {
+  optional string root_category_id = 1;
+}
+
+message GetDefaultScorecardsResponse {
+  repeated DefaultScorecardProto default_scorecards = 1;
+}
+
+message DefaultScorecardProto {
+  optional int64 scorecard_id = 1;
+  optional int32 scorecard_type_id = 2;
+  optional int32 project_category_id = 3;
+  optional string name = 4;
+}
+
+message DeleteProjectResultRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message DeleteComponentInquiryRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message UpdateProjectResultForAdvanceScreeningRequest {
+  optional int64 user_id = 1;
+  optional int64 project_id = 2;
+}
+
+message GetVersionUsingComponentVersionIdRequest {
+  optional int64 comp_vers_id = 1;
+}
+
+message GetVersionUsingComponentVersionIdResponse {
+  optional int32 version = 1;
+}
+
+message GetDeliverableIdToNameMapResponse {
+  repeated DeliverabIdNameProto deliverables = 1;
+}
+
+message DeliverabIdNameProto {
+  optional int64 deliverable_id = 1;
+  optional string name = 2;
+}
+
+message LogDownloadAttemptRequest {
+  optional int64 upload_id = 1;
+  optional int64 user_id = 2;
+  optional string ip_address = 3;
+  optional bool successful = 4;
+}
+
+service ActionsHelperService {
+  rpc GetUserPreferenceValue(GetUserPreferenceValueRequest) returns (GetUserPreferenceValueResponse);
+  rpc IsProjectResultExists(IsProjectResultExistsRequest) returns (IsProjectResultExistsResponse);
+  rpc IsComponentInquiryExists(IsComponentInquiryExistsRequest) returns (IsComponentInquiryExistsResponse);
+  rpc GetRatings(GetRatingsRequest) returns (GetRatingsResponse);
+  rpc CreateProjectResult(CreateProjectResultRequest) returns (CountProto);
+  rpc CreateComponentInquiry(CreateComponentInquiryRequest) returns (CountProto);
+  rpc GetNextComponentInquiryId(google.protobuf.Empty) returns (NextIdProto);
+  rpc UpdateNextComponentInquiryId(UpdateNextIdRequest) returns (CountProto);
+  rpc GetRootCategoryIdByComponentId(GetRootCategoryIdByComponentIdRequest) returns (GetRootCategoryIdByComponentIdResponse);
+  rpc GetDefaultScorecards(google.protobuf.Empty) returns (GetDefaultScorecardsResponse);
+  rpc DeleteProjectResult(DeleteProjectResultRequest) returns (CountProto);
+  rpc DeleteComponentInquiry(DeleteComponentInquiryRequest) returns (CountProto);
+  rpc UpdateProjectResultForAdvanceScreening(UpdateProjectResultForAdvanceScreeningRequest) returns (CountProto);
+  rpc GetVersionUsingComponentVersionId(GetVersionUsingComponentVersionIdRequest) returns (GetVersionUsingComponentVersionIdResponse);
+  rpc GetDeliverableIdToNameMap(google.protobuf.Empty) returns (GetDeliverableIdToNameMapResponse);
+  rpc LogDownloadAttempt(LogDownloadAttemptRequest) returns (CountProto);
+}
