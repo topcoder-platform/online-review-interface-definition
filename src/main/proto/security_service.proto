@@ -23,13 +23,13 @@ message GroupMemberProto {
   optional int64 group_id = 3;
   optional bool use_group_default = 4;
   optional string specific_permission = 5;
-  optional boolean active = 6;
+  optional bool active = 6;
   google.protobuf.Timestamp activated_on = 7;
   google.protobuf.Timestamp unassigned_on = 8;
   optional string group_name = 9;
   optional string group_default_permission = 10;
   optional int64 group_client_id = 11;
-  optional boolean group_archived = 12;
+  optional bool group_archived = 12;
   google.protobuf.Timestamp group_archived_on = 13;
   optional int64 group_effective_group_id = 14;
   optional bool group_auto_grant = 15;
@@ -101,8 +101,11 @@ message GetBillingAccountResponse {
   optional string name = 3;
   optional string description = 4;
   optional int64 client_id = 5;
-  optional bool is_deleted = 6;
-  optional bool active = 7;
+  optional string client_name = 6;
+  optional int64 client_company_id = 7;
+  optional bool client_is_deleted = 8;
+  optional bool is_deleted = 9;
+  optional bool active = 10;
 }
 
 message GetBillingAccountsForClientResponse {
@@ -111,7 +114,7 @@ message GetBillingAccountsForClientResponse {
 
 message BillingAccountForClientProto {
   optional int64 client_id = 1;
-  optional int billing_account_id = 2;
+  optional int64 billing_account_id = 2;
   optional string client_name = 3;
   optional string blling_account_name = 4;
 }
@@ -124,16 +127,12 @@ message GetProjectNameResponse {
   optional string project_name = 1;
 }
 
-message GetProjectNameRequest {
-  optional int64 project_id = 1;
-}
-
 message GetProjectsByClientIdResponse {
   repeated ProjectByClientIdProto projects = 1;
 }
 
 message ProjectByClientIdProto {
-  optional int64 project_id = 1;
+  optional int64 client_id = 1;
   optional int64 direct_project_id = 2;
   optional string direct_project_name = 3;
 }
@@ -153,7 +152,7 @@ message GetUserRolesRequest {
 }
 
 message GetUserRolesResponse {
-  
+  repeated UserRoleProto user_roles = 1;
 }
 
 message UserRoleProto {
@@ -166,10 +165,10 @@ message IsCloudSpokesUserRequest {
 }
 
 message IsCloudSpokesUserResponse {
- bool is_cloud_spokes_user = 1; 
+  bool is_cloud_spokes_user = 1;
 }
 
-service WebCommonService {
+service SecurityService {
   rpc GetGroupMembers(GetGroupMembersRequest) returns (GetGroupMembersResponse);
   rpc GetDirectProjects(GetDirectProjectsRequest) returns (GetDirectProjectsResponse);
   rpc GetBillingAccounts(GetBillingAccountsRequest) returns (GetBillingAccountsResponse);
@@ -177,10 +176,10 @@ service WebCommonService {
   rpc IsAdministrator(IsAdministratorRequest) returns (IsAdministratorResponse);
   rpc GetGroupIdsOfFullPermissionsUser(GetGroupIdsOfFullPermissionsUserRequest) returns (GetGroupIdsOfFullPermissionsUserResponse);
   rpc GetBillingAccount(GetBillingAccountRequest) returns (GetBillingAccountResponse);
-  rpc GetBillingAccountsForClient(GetBillingAccountsForClientRequest) returns (GetBillingAccountsForClientResponse);
+  rpc GetBillingAccountsForClient(google.protobuf.Empty) returns (GetBillingAccountsForClientResponse);
   rpc GetProjectName(GetProjectNameRequest) returns (GetProjectNameResponse);
   rpc GetProjectsByClientId(google.protobuf.Empty) returns (GetProjectsByClientIdResponse);
   rpc GetProjectsByBillingAccounts(google.protobuf.Empty) returns (GetProjectsByBillingAccountsResponse);
   rpc GetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse);
-  rpc IsCloudSpokesUser(IsCloudSpokesUserRequest) returns (IsCloudSpokesUserResponse)
+  rpc IsCloudSpokesUser(IsCloudSpokesUserRequest) returns (IsCloudSpokesUserResponse);
 }
