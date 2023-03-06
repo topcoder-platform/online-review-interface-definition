@@ -337,6 +337,11 @@ message DeleteProjectLinksBySourceIdRequest {
   optional int64 source_project_id = 1;
 }
 
+message UpdateProjectStatusRequest {
+  optional int64 project_id = 1;
+  optional int64 status_id = 2;
+}
+
 service ProjectService {
   rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse);
   rpc CountUserProjects(CountUserProjectsRequest) returns (CountUserProjectsResponse);
@@ -372,4 +377,5 @@ service ProjectService {
   rpc GetSourceProjectLinks(GetSourceProjectLinksRequest) returns (GetSourceProjectLinksResponse);
   rpc DeleteProjectLinksBySourceId(DeleteProjectLinksBySourceIdRequest) returns (CountProto);
   rpc CreateProjectLink(ProjectLinkProto) returns (CountProto);
+  rpc UpdateProjectStatus(UpdateProjectStatusRequest) returns (CountProto);
 }
