@@ -1,0 +1,182 @@
+syntax = "proto3";
+
+package phase;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.phase.proto";
+option java_outer_classname = "PhaseProtos";
+
+message ProjectIdsProto {
+  repeated int64 project_ids = 1;
+}
+
+message PhaseIdsProto {
+  repeated int64 phase_ids = 1;
+}
+
+message PhaseIdProto {
+  optional int64 phase_id = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message PhaseProto {
+  optional int64 project_phase_id = 1;
+  optional int64 project_id = 2;
+  google.protobuf.Timestamp fixed_start_time = 3;
+  google.protobuf.Timestamp scheduled_start_time = 4;
+  google.protobuf.Timestamp scheduled_end_time = 5;
+  google.protobuf.Timestamp actual_start_time = 6;
+  google.protobuf.Timestamp actual_end_time = 7;
+  optional int64 duration = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+  optional int64 phase_type_id = 11;
+  optional string phase_type_name = 12;
+  optional int64 phase_status_id = 13;
+  optional string phase_status_name = 14;
+}
+
+message PhaseTypeProto {
+  optional int64 phase_type_id = 1;
+  optional string phase_type_name = 2;
+}
+
+message PhaseStatusProto {
+  optional int64 phase_status_id = 1;
+  optional string phase_status_name = 2;
+}
+
+message PhaseCriteriaProto {
+  optional int64 project_phase_id = 1;
+  optional int64 phase_criteria_type_id = 2;
+  optional string criteria_name = 3;
+  optional string parameter = 4;
+}
+
+message PhaseCriteriaTypeProto {
+  optional int64 phase_criteria_type_id = 1;
+  optional string name = 2;
+}
+
+message PhaseDependencyProto {
+  optional int64 dependency_phase_id = 1;
+  optional int64 dependent_phase_id = 2;
+  optional bool dependency_start = 3;
+  optional bool dependent_start = 4;
+  optional int64 lag_time = 5;
+}
+
+message PhaseIdProjectIdProto {
+  optional int64 project_phase_id = 1;
+  optional int64 project_id = 2;
+}
+
+message GetPhasesResponse {
+  repeated PhaseProto phases = 1;
+}
+
+message GetProjectIdsByPhaseIdsResponse {
+  repeated PhaseIdProjectIdProto phase_ids = 1;
+}
+
+message GetPhaseCriteriasResponse {
+  repeated PhaseCriteriaProto phase_criteria = 1;
+}
+
+message GetPhaseDependenciesResponse {
+  repeated PhaseDependencyProto phase_dependencies = 1;
+}
+
+message GetPhaseTypesResponse {
+  repeated PhaseTypeProto phase_types = 1;
+}
+
+message GetPhaseStatusesResponse {
+  repeated PhaseStatusProto phase_statuses = 1;
+}
+
+message GetPhaseCriteriaTypesResponse {
+  repeated PhaseCriteriaTypeProto phase_criteria_types = 1;
+}
+
+message CreatePhaseRequest {
+  PhaseProto phase = 1;
+  optional string operator = 2;
+}
+
+message CreatePhaseCriteriaRequest {
+  PhaseCriteriaProto phase_criteria = 1;
+  optional string operator = 2;
+}
+
+message CreatePhaseDependencyRequest {
+  PhaseDependencyProto phase_dependency = 1;
+  optional string operator = 2;
+}
+
+message UpdatePhaseRequest {
+  repeated PhaseProto phases = 1;
+  optional string operator = 2;
+}
+
+message UpdatePhaseResponse {
+  google.protobuf.Timestamp modify_date = 1;
+}
+
+message UpdatePhaseCriteriaRequest {
+  PhaseCriteriaProto phase_criteria = 1;
+  optional string operator = 2;
+}
+
+message UpdatePhaseDependencyRequest {
+  PhaseDependencyProto phase_dependency = 1;
+  optional string operator = 2;
+}
+
+message DeletePhaseDependencyRequest {
+  optional int64 dependent_phase_id = 1;
+  repeated int64 dependency_phase_ids = 2;
+}
+
+message DeletePhaseCriteriasRequest {
+  optional int64 project_phase_id = 1;
+  repeated int64 phase_criteria_type_ids = 2;
+}
+
+message DependencyExistenceRequest {
+  optional int64 dependent_phase_id = 1;
+  optional int64 dependency_phase_id = 2;
+}
+
+message DependencyExistenceResponse {
+  bool exists = 1;
+}
+
+service PhaseService {
+  rpc GetProjectIds(ProjectIdsProto) returns (ProjectIdsProto);
+  rpc GetPhasesByProjectIds(ProjectIdsProto) returns (GetPhasesResponse);
+  rpc GetProjectIdsByPhaseIds(PhaseIdsProto) returns (GetProjectIdsByPhaseIdsResponse);
+  rpc GetPhaseCriteriasByProjectIds(ProjectIdsProto) returns (GetPhaseCriteriasResponse);
+  rpc GetPhaseCriteriasByPhaseId(PhaseIdProto) returns (GetPhaseCriteriasResponse);
+  rpc GetPhaseDependenciesByProjectId(ProjectIdsProto) returns (GetPhaseDependenciesResponse);
+  rpc GetPhaseDependenciesByDependentPhaseId(PhaseIdProto) returns (GetPhaseDependenciesResponse);
+  rpc GetAllPhaseTypes(google.protobuf.Empty) returns (GetPhaseTypesResponse);
+  rpc GetAllPhaseStatuses(google.protobuf.Empty) returns (GetPhaseStatusesResponse);
+  rpc GetAllPhaseCriteriaTypes(google.protobuf.Empty) returns (GetPhaseCriteriaTypesResponse);
+  rpc CreatePhase(CreatePhaseRequest) returns (PhaseProto);
+  rpc CreatePhaseCriteria(CreatePhaseCriteriaRequest) returns (CountProto);
+  rpc CreatePhaseDependency(CreatePhaseDependencyRequest) returns (CountProto);
+  rpc UpdatePhase(UpdatePhaseRequest) returns (UpdatePhaseResponse);
+  rpc UpdatePhaseCriteria(UpdatePhaseCriteriaRequest) returns (CountProto);
+  rpc UpdatePhaseDependency(UpdatePhaseDependencyRequest) returns (CountProto);
+  rpc DeletePhases(PhaseIdsProto) returns (CountProto);
+  rpc DeletePhaseDependencies(DeletePhaseDependencyRequest) returns (CountProto);
+  rpc DeletePhaseCriterias(DeletePhaseCriteriasRequest) returns (CountProto);
+  rpc CheckIfDependencyExists(DependencyExistenceRequest) returns (DependencyExistenceResponse);
+}

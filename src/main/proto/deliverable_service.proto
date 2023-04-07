@@ -1,0 +1,274 @@
+syntax = "proto3";
+
+package deliverable;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.deliverable.proto";
+option java_outer_classname = "DeliverableProtos";
+
+message LoadDeliverablesWithoutSubmissionRequest {
+  repeated int64 deliverable_ids = 1;
+  repeated int64 resource_ids = 2;
+  repeated int64 phase_ids = 3;
+}
+
+message LoadDeliverablesWithoutSubmissionResponse {
+  repeated DeliverableWithoutSubmissionProto deliverables_without_submissions = 1;
+}
+
+message DeliverableWithoutSubmissionProto {
+  optional int64 project_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional bool required = 4;
+  optional int64 deliverable_id = 5;
+  optional string create_user = 6;
+  google.protobuf.Timestamp create_date = 7;
+  optional string modify_user = 8;
+  google.protobuf.Timestamp modify_date = 9;
+  optional string name = 10;
+  optional string description = 11;
+}
+
+message LoadDeliverablesWithSubmissionRequest {
+  repeated int64 deliverable_ids = 1;
+  repeated int64 resource_ids = 2;
+  repeated int64 phase_ids = 3;
+  repeated int64 submission_ids = 4;
+}
+
+message LoadDeliverablesWithSubmissionResponse {
+  repeated DeliverableWithSubmissionProto deliverables_with_submissions = 1;
+}
+
+message DeliverableWithSubmissionProto {
+  optional int64 project_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional int64 submission_id = 4;
+  optional bool required = 5;
+  optional int64 deliverable_id = 6;
+  optional string create_user = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+  optional string name = 11;
+  optional string description = 12;
+}
+
+message UpdateLateDeliverableRequest {
+  optional int64 late_deliverable_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 resource_id = 3;
+  optional int64 deliverable_id = 4;
+  google.protobuf.Timestamp deadline = 5;
+  google.protobuf.Timestamp compensated_deadline = 6;
+  google.protobuf.Timestamp create_date = 7;
+  optional bool forgive_ind = 8;
+  google.protobuf.Timestamp last_notified = 9;
+  optional int64 delay = 10;
+  optional string explanation = 11;
+  google.protobuf.Timestamp explanation_date = 12;
+  optional string response = 13;
+  optional string response_user = 14;
+  google.protobuf.Timestamp response_date = 15;
+  optional int64 late_deliverable_type_id = 16;
+}
+
+message UpdatedCountProto {
+  int32 count = 1;
+}
+
+message LateDeliverableTypeProto {
+  optional int64 late_deliverable_type_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+}
+
+message LateDeliverableTypesResponse {
+  repeated LateDeliverableTypeProto late_deliverable_types = 1;
+}
+
+message AggregationDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+}
+
+message ModifyDateProto {
+  google.protobuf.Timestamp modify_date = 1;
+}
+
+message AggregationDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message AppealResponsesDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 submission_id = 2;
+}
+
+message AppealResponsesDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message CommittedReviewDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 submission_id = 3;
+  optional bool is_per_submission = 4;
+}
+
+message CommittedReviewDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message FinalFixesDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+}
+
+message FinalFixesDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message FinalReviewDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+}
+
+message FinalReviewDeliverableCheckResponseMessage {
+  google.protobuf.Timestamp modify_date = 1;
+  optional int64 submission_id = 2;
+}
+
+message FinalReviewDeliverableCheckResponse {
+  repeated FinalReviewDeliverableCheckResponseMessage results = 1;
+}
+
+message IndividualReviewDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+}
+
+message IndividualReviewDeliverableCheckResponseMessage {
+  google.protobuf.Timestamp modify_date = 1;
+  optional int64 submission_id = 2;
+}
+
+message IndividualReviewDeliverableCheckResponse {
+  repeated IndividualReviewDeliverableCheckResponseMessage results = 1;
+}
+
+message SpecificationSubmissionDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+}
+
+message SpecificationSubmissionDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message SubmissionDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 submission_type_id = 2;
+}
+
+message SubmissionDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message SubmitterCommentDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+}
+
+message SubmitterCommentDeliverableCheckResponseMessage {
+  google.protobuf.Timestamp modify_date = 1;
+  optional int64 submission_id = 2;
+}
+
+message SubmitterCommentDeliverableCheckResponse {
+  repeated SubmitterCommentDeliverableCheckResponseMessage results = 1;
+}
+
+message TestCasesDeliverableCheckRequest {
+  optional int64 resource_id = 1;
+  optional int64 project_phase_id = 2;
+}
+
+message TestCasesDeliverableCheckResponse {
+  repeated ModifyDateProto modify_dates = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+message SearchDeliverablesProto {
+  optional int64 deliverable_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 project_phase_id = 3;
+}
+
+message SearchDeliverablesResponse {
+  repeated SearchDeliverablesProto deliverables = 1;
+}
+
+message SearchDeliverablesWithSubmissionProto {
+  optional int64 deliverable_id = 1;
+  optional int64 resource_id = 2;
+  optional int64 project_phase_id = 3;
+  optional int64 submission_id = 4;
+}
+
+message SearchDeliverablesWithSubmissionResponse {
+  repeated SearchDeliverablesWithSubmissionProto deliverables = 1;
+}
+
+message LateDeliverablesProto {
+  optional int64 late_deliverable_id = 1;
+  optional int64 project_id = 2;
+  optional int64 project_phase_id = 3;
+  optional int64 resource_id = 4;
+  optional int64 deliverable_id = 5;
+  google.protobuf.Timestamp deadline = 6;
+  google.protobuf.Timestamp compensated_deadline = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional bool forgive_ind = 9;
+  google.protobuf.Timestamp last_notified = 10;
+  optional int64 delay = 11;
+  optional string explanation = 12;
+  google.protobuf.Timestamp explanation_date = 13;
+  optional string response = 14;
+  optional string response_user = 15;
+  google.protobuf.Timestamp response_date = 16;
+  optional int64 late_deliverable_type_id = 17;
+  optional string name = 18;
+  optional string description = 19;
+
+}
+
+message SearchLateDeliverablesResponse {
+  repeated LateDeliverablesProto late_deliverables = 1;
+}
+
+service DeliverableService {
+  rpc LoadDeliverablesWithoutSubmission(LoadDeliverablesWithoutSubmissionRequest) returns (LoadDeliverablesWithoutSubmissionResponse);
+  rpc LoadDeliverablesWithSubmission(LoadDeliverablesWithSubmissionRequest) returns (LoadDeliverablesWithSubmissionResponse);
+  rpc UpdateLateDeliverable(UpdateLateDeliverableRequest) returns (UpdatedCountProto);
+  rpc GetLateDeliverableTypes(google.protobuf.Empty) returns (LateDeliverableTypesResponse);
+  rpc AggregationDeliverableCheck(AggregationDeliverableCheckRequest) returns (AggregationDeliverableCheckResponse);
+  rpc AppealResponsesDeliverableCheck(AppealResponsesDeliverableCheckRequest) returns (AppealResponsesDeliverableCheckResponse);
+  rpc CommittedReviewDeliverableCheck(CommittedReviewDeliverableCheckRequest) returns (CommittedReviewDeliverableCheckResponse);
+  rpc FinalFixesDeliverableCheck(FinalFixesDeliverableCheckRequest) returns (FinalFixesDeliverableCheckResponse);
+  rpc FinalReviewDeliverableCheck(FinalReviewDeliverableCheckRequest) returns (FinalReviewDeliverableCheckResponse);
+  rpc IndividualReviewDeliverableCheck(IndividualReviewDeliverableCheckRequest) returns (IndividualReviewDeliverableCheckResponse);
+  rpc SpecificationSubmissionDeliverableCheck(SpecificationSubmissionDeliverableCheckRequest) returns (SpecificationSubmissionDeliverableCheckResponse);
+  rpc SubmissionDeliverableCheck(SubmissionDeliverableCheckRequest) returns (SubmissionDeliverableCheckResponse);
+  rpc SubmitterCommentDeliverableCheck(SubmitterCommentDeliverableCheckRequest) returns (SubmitterCommentDeliverableCheckResponse);
+  rpc TestCasesDeliverableCheck(TestCasesDeliverableCheckRequest) returns (TestCasesDeliverableCheckResponse);
+  rpc SearchDeliverables(FilterProto) returns (SearchDeliverablesResponse);
+  rpc SearchDeliverablesWithSubmission(FilterProto) returns (SearchDeliverablesWithSubmissionResponse);
+  rpc SearchLateDeliverablesNonRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
+  rpc SearchLateDeliverablesRestricted(FilterProto) returns (SearchLateDeliverablesResponse);
+}

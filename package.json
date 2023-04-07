@@ -1,0 +1,19 @@
+{
+  "name": "online-review-interface-definition",
+  "version": "1.0.0",
+  "description": "This project contains the raw protobuf files needed to generate gRPC client & server stubs for the Online Review Persistence Calls.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/topcoder-platform/online-review-interface-definition.git"
+  },
+  "author": "Topcoder Platform Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/topcoder-platform/online-review-interface-definition/issues"
+  },
+  "homepage": "https://github.com/topcoder-platform/online-review-interface-definition#readme"
+}

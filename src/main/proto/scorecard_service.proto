@@ -1,0 +1,276 @@
+syntax = "proto3";
+
+package scorecard;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.scorecard.proto";
+option java_outer_classname = "ScorecardProtos";
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ScorecardIdProto {
+  optional int64 scorecard_id = 1;
+}
+
+message ScorecardIdsProto {
+  repeated int64 scorecard_ids = 1;
+}
+
+message QuestionIdProto {
+  optional int64 scorecard_question_id = 1;
+}
+
+message QuestionIdsProto {
+  repeated int64 scorecard_question_ids = 1;
+}
+
+message GroupIdProto {
+  optional int64 scorecard_group_id = 1;
+}
+
+message GroupIdsProto {
+  repeated int64 scorecard_group_ids = 1;
+}
+
+message SectionIdProto {
+  optional int64 scorecard_section_id = 1;
+}
+
+message SectionIdsProto {
+  repeated int64 scorecard_section_ids = 1;
+}
+
+message ProjectCategoryIdProto {
+  optional int64 project_category_id = 1;
+}
+
+message CreateGroupRequest {
+  optional int64 scorecard_id = 1;
+  optional string name = 2;
+  optional float weight = 3;
+  optional int32 sort = 4;
+  optional string operator = 5;
+}
+
+message CreateGroupsRequest {
+  repeated CreateGroupRequest groups = 1;
+}
+
+message UpdateGroupRequest {
+  optional int64 scorecard_group_id = 1;
+  optional int64 scorecard_id = 2;
+  optional string name = 3;
+  optional float weight = 4;
+  optional int32 sort = 5;
+  optional string operator = 6;
+}
+
+message GetGroupResponse {
+  optional int64 scorecard_group_id = 1;
+  optional string name = 2;
+  optional float weight = 3;
+}
+
+message GetGroupsResponse {
+  repeated GetGroupResponse groups = 1;
+}
+
+message CreateQuestionRequest {
+  optional int64 scorecard_question_type_id = 1;
+  optional int64 scorecard_section_id = 2;
+  optional string description = 3;
+  optional string guideline = 4;
+  optional float weight = 5;
+  optional int32 sort = 6;
+  optional bool upload_document  = 7;
+  optional bool upload_document_required = 8;
+  optional string operator = 9;
+}
+
+message CreateQuestionsRequest {
+  repeated CreateQuestionRequest questions = 1;
+}
+
+message UpdateQuestionRequest {
+  optional int64 scorecard_question_id = 1;
+  optional int64 scorecard_question_type_id = 2;
+  optional int64 scorecard_section_id = 3;
+  optional string description = 4;
+  optional string guideline = 5;
+  optional float weight = 6;
+  optional int32 sort = 7;
+  optional bool upload_document  = 8;
+  optional bool upload_document_required = 9;
+  optional string operator = 10;
+}
+
+message GetQuestionResponse {
+  optional int64 scorecard_question_id = 1;
+  optional int64 scorecard_question_type_id = 2;
+  optional string scorecard_question_type_name = 3;
+  optional string description = 4;
+  optional string guideline = 5;
+  optional float weight = 6;
+  optional bool upload_document  = 7;
+  optional bool upload_document_required = 8;
+}
+
+message GetQuestionsResponse {
+  repeated GetQuestionResponse questions = 1;
+}
+
+message CreateScorecardRequest {
+  optional int64 scorecard_status_id = 1;
+  optional int64 scorecard_type_id = 2;
+  optional int64 project_category_id = 3;
+  optional string name = 4;
+  optional string version = 5;
+  optional float min_score = 6;
+  optional float max_score  = 7;
+  optional string create_user = 8;
+  google.protobuf.Timestamp create_date = 9;
+  optional string modify_user = 10;
+  google.protobuf.Timestamp modify_date = 11;
+}
+
+message UpdateScorecardRequest {
+  optional int64 scorecard_id = 1;
+  optional int64 scorecard_status_id = 2;
+  optional int64 scorecard_type_id = 3;
+  optional int64 project_category_id = 4;
+  optional string name = 5;
+  optional string version = 6;
+  optional float min_score = 7;
+  optional float max_score  = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message ScorecardTypeProto {
+  optional int64 scorecard_type_id = 1;
+  optional string name = 2;
+}
+
+message GetAllScorecardTypesResponse {
+  repeated ScorecardTypeProto scorecard_types = 1;
+}
+
+message QuestionTypeProto {
+  optional int64 scorecard_question_type_id = 1;
+  optional string name = 2;
+}
+
+message GetAllQuestionTypesResponse {
+  repeated QuestionTypeProto question_types = 1;
+}
+
+message ScorecardStatusProto {
+  optional int64 scorecard_status_id = 1;
+  optional string name = 2;
+}
+
+message GetAllScorecardStatusesResponse {
+  repeated ScorecardStatusProto scorecard_statuses = 1;
+}
+
+message ScorecardsIDInfoProto {
+  optional int64 scorecard_type_id = 1;
+  optional int64 scorecard_id = 2;
+}
+
+message GetDefaultScorecardsIDInfoResponse {
+  repeated ScorecardsIDInfoProto scorecard_id_infos = 1;
+}
+
+message ScorecardProto {
+  optional int64 scorecard_id = 1;
+  optional int64 scorecard_status_id = 2;
+  optional string scorecard_status_name = 3;
+  optional int64 scorecard_type_id = 4;
+  optional string scorecard_type_name = 5;
+  optional int64 project_category_id = 6;
+  optional string name = 7;
+  optional string version = 8;
+  optional float min_score = 9;
+  optional float max_score  = 10;
+  optional string create_user = 11;
+  google.protobuf.Timestamp create_date = 12;
+  optional string modify_user = 13;
+  google.protobuf.Timestamp modify_date = 14;
+}
+
+message GetScorecardsResponse {
+  repeated ScorecardProto scorecards = 1;
+}
+
+message CreateSectionRequest {
+  optional int64 scorecard_group_id = 1;
+  optional string name = 2;
+  optional float weight = 3;
+  optional int32 sort = 4;
+  optional string operator = 5;
+}
+
+message CreateSectionsRequest {
+  repeated CreateSectionRequest sections = 1;
+}
+
+message UpdateSectionRequest {
+  optional int64 scorecard_section_id = 1;
+  optional int64 scorecard_group_id = 2;
+  optional string name = 3;
+  optional float weight = 4;
+  optional int32 sort = 5;
+  optional string operator = 6;
+}
+
+message GetSectionResponse {
+  optional int64 scorecard_section_id = 1;
+  optional string name = 2;
+  optional float weight = 3;
+}
+
+message GetSectionsResponse {
+  repeated GetSectionResponse sections = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+service ScorecardService {
+  rpc CreateGroup(CreateGroupRequest) returns (GroupIdProto);
+  rpc CreateGroups(CreateGroupsRequest) returns (GroupIdsProto);
+  rpc UpdateGroup(UpdateGroupRequest) returns (CountProto);
+  rpc GetScorecardSectionIds(GroupIdsProto) returns (SectionIdsProto);
+  rpc DeleteGroups(GroupIdsProto) returns (CountProto);
+  rpc GetGroup(GroupIdProto) returns (GetGroupResponse);
+  rpc GetGroups(ScorecardIdProto) returns (GetGroupsResponse);
+  rpc CreateQuestion(CreateQuestionRequest) returns (QuestionIdProto);
+  rpc CreateQuestions(CreateQuestionsRequest) returns (QuestionIdsProto);
+  rpc UpdateQuestion(UpdateQuestionRequest) returns (CountProto);
+  rpc DeleteQuestions(QuestionIdsProto) returns (CountProto);
+  rpc GetQuestion(QuestionIdProto) returns (GetQuestionResponse);
+  rpc GetQuestions(SectionIdProto) returns (GetQuestionsResponse);
+  rpc CreateScorecard(CreateScorecardRequest) returns (ScorecardIdProto);
+  rpc UpdateScorecard(UpdateScorecardRequest) returns (CountProto);
+  rpc GetAllScorecardTypes(google.protobuf.Empty) returns (GetAllScorecardTypesResponse);
+  rpc GetAllQuestionTypes(google.protobuf.Empty) returns (GetAllQuestionTypesResponse);
+  rpc GetAllScorecardStatuses(google.protobuf.Empty) returns (GetAllScorecardStatusesResponse);
+  rpc GetDefaultScorecardsIDInfo(ProjectCategoryIdProto) returns (GetDefaultScorecardsIDInfoResponse);
+  rpc GetScorecards(ScorecardIdsProto) returns (GetScorecardsResponse);
+  rpc GetScorecardsInUse(ScorecardIdsProto) returns (ScorecardIdsProto);
+  rpc CreateSection(CreateSectionRequest) returns (SectionIdProto);
+  rpc CreateSections(CreateSectionsRequest) returns (SectionIdsProto);
+  rpc UpdateSection(UpdateSectionRequest) returns (CountProto);
+  rpc GetQuestionIds(SectionIdsProto) returns (QuestionIdsProto);
+  rpc DeleteSections(SectionIdsProto) returns (CountProto);
+  rpc GetSection(SectionIdProto) returns (GetSectionResponse);
+  rpc GetSections(GroupIdProto) returns (GetSectionsResponse);
+  rpc SearchScorecards(FilterProto) returns (GetScorecardsResponse);
+}

@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package payment;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.payment.proto";
+option java_outer_classname = "PaymentProtos";
+
+message BigDecimalProto {
+  uint32 scale = 1;
+  uint32 precision = 2;
+  bytes value = 3;
+}
+
+message IdProto {
+  optional int64 id = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ExistsProto {
+  bool exists = 1;
+}
+
+message ProjectPaymentProto {
+  optional int64 id = 1;
+  optional int64 resource_id = 2;
+  optional int64 submission_id = 3;
+  BigDecimalProto amount = 4;
+  optional int64 pacts_payment_id = 5;
+  ProjectPaymentTypeProto project_payment_type = 6;
+  optional string create_user = 7;
+  google.protobuf.Timestamp create_date = 8;
+  optional string modify_user = 9;
+  google.protobuf.Timestamp modify_date = 10;
+}
+
+message ProjectPaymentTypeProto {
+  optional int64 id = 1;
+  optional string name = 2;
+  optional bool mergeable = 3;
+  optional int64 pacts_payment_type_id = 4;
+}
+
+message ProjectPaymentAdjustmentProto {
+  optional int64 project_id = 1;
+  optional int64 resource_role_id = 2;
+  BigDecimalProto fixed_amount = 3;
+  optional double multiplier = 4;
+}
+
+message CreatePaymentRequest {
+  ProjectPaymentProto project_payment = 1;
+  optional string operator = 2; 
+}
+
+message UpdatePaymentRequest {
+  ProjectPaymentProto project_payment = 1;
+  optional string operator = 2; 
+}
+
+message GetPaymentAdjustmentsResponse {
+  repeated ProjectPaymentAdjustmentProto payment_adjustments = 1;
+}
+
+message GetPaymentAdjustmentsRequest {
+  optional int64 project_id = 1;
+  repeated int64 resource_ids = 2;
+}
+
+message GetDefaultPaymentsRequest {
+  optional int64 project_id = 1;
+}
+
+message GetDefaultPaymentsResponse {
+  repeated DefaultPaymentProto default_payments = 1;
+}
+
+message DefaultPaymentProto {
+  optional int64 resource_role_id = 1;
+  BigDecimalProto fixed_amount = 2;
+  optional float base_coefficient = 3;
+  optional float incremental_coefficient = 4;
+  optional float prize = 5;
+  optional int32 total_contest_submissions = 6;
+  optional int32 passed_contest_submissions = 7;
+  optional int32 total_checkpoint_submissions = 8;
+  optional int32 passed_checkpoint_submissions = 9;
+  optional int32 total_reviewed_contest_submissions = 10;
+}
+
+message GetDefaultPaymentRequest {
+  optional int64 project_category_id = 1;
+  optional int64 resource_role_id = 2;
+}
+
+message GetDefaultPaymentResponse {
+  DefaultPaymentProto default_payment = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+message SearchPaymentsResponse {
+  repeated ProjectPaymentProto payments = 1;
+}
+
+service PaymentService {
+  rpc CreatePayment(CreatePaymentRequest) returns (IdProto);
+  rpc UpdatePayment(UpdatePaymentRequest) returns (CountProto);
+  rpc GetPayment(IdProto) returns (ProjectPaymentProto);
+  rpc DeletePayment(IdProto) returns (CountProto);
+  rpc CreatePaymentAdjustment(ProjectPaymentAdjustmentProto) returns (CountProto);
+  rpc UpdatePaymentAdjustment(ProjectPaymentAdjustmentProto) returns (CountProto);
+  rpc GetPaymentAdjustments(IdProto) returns (GetPaymentAdjustmentsResponse);
+  rpc GetPaymentAdjustmentsForResource(GetPaymentAdjustmentsRequest) returns (GetPaymentAdjustmentsResponse);
+  rpc IsProjectPaymentTypeExists(IdProto) returns (ExistsProto);
+  rpc IsResourceExists(IdProto) returns (ExistsProto);
+  rpc IsSubmissionExists(IdProto) returns (ExistsProto);
+  rpc GetDefaultPayments(GetDefaultPaymentsRequest) returns (GetDefaultPaymentsResponse);
+  rpc GetDefaultPayment(GetDefaultPaymentRequest) returns (GetDefaultPaymentResponse);
+  rpc SearchPayments(FilterProto) returns (SearchPaymentsResponse);
+}

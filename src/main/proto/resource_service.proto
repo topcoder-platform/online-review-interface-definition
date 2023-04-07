@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+package resource;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.resource.proto";
+option java_outer_classname = "ResourceProtos";
+
+message ResourceIdProto {
+  optional int64 resource_id = 1;
+}
+
+message ResourceIdsProto {
+  repeated int64 resource_ids = 1;
+}
+
+message ResourceRoleIdProto {
+  optional int64 resource_role_id = 1;
+}
+
+message NotificationTypeIdProto {
+  optional int64 notification_type_id = 1;
+}
+
+message NotificationTypeIdsProto {
+  repeated int64 notification_type_ids = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ResourceProto {
+  optional int64 resource_id = 1;
+  optional int64 resource_role_id = 2;
+  optional int64 project_id = 3;
+  optional int64 project_phase_id = 4;
+  optional int64 user_id = 5;
+  optional string create_user = 6;
+  google.protobuf.Timestamp create_date = 7;
+  optional string modify_user = 8;
+  google.protobuf.Timestamp modify_date = 9;
+}
+
+message ResourceSubmissionProto {
+  optional int64 resource_id = 1;
+  optional int64 submission_id = 2;
+  optional string create_user = 3;
+  google.protobuf.Timestamp create_date = 4;
+  optional string modify_user = 5;
+  google.protobuf.Timestamp modify_date = 6;
+}
+
+message ResourceInfoProto {
+  optional int64 resource_id = 1;
+  optional int64 resource_info_type_id = 2;
+  optional string type_name = 3;
+  optional string value = 4;
+  optional string create_user = 5;
+  google.protobuf.Timestamp create_date = 6;
+  optional string modify_user = 7;
+  google.protobuf.Timestamp modify_date = 8;
+}
+
+message ResourceRoleProto {
+  optional int64 resource_role_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional int64 phase_type_id = 4;
+  optional string create_user = 5;
+  google.protobuf.Timestamp create_date = 6;
+  optional string modify_user = 7;
+  google.protobuf.Timestamp modify_date = 8;
+}
+
+message NotificationProto {
+  optional int64 project_id = 1;
+  optional int64 external_ref_id = 2;
+  optional int64 notification_type_id = 3;
+  optional string create_user = 4;
+  google.protobuf.Timestamp create_date = 5;
+  optional string modify_user = 6;
+  google.protobuf.Timestamp modify_date = 7;
+}
+
+message NotificationTypeProto {
+  optional int64 notification_type_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional string create_user = 4;
+  google.protobuf.Timestamp create_date = 5;
+  optional string modify_user = 6;
+  google.protobuf.Timestamp modify_date = 7;
+}
+
+message GetResourcesResponse {
+  repeated ResourceProto resources = 1;
+}
+
+message GetResourcesByProjectsRequest {
+  optional int64 user_id = 1;
+  repeated int64 project_ids = 2;
+}
+
+message GetSubmissionsResponse {
+  repeated ResourceSubmissionProto submissions = 1;
+}
+
+message GetResourceInfoResponse {
+  repeated ResourceInfoProto resource_info = 1;
+}
+
+message GetResourceInfoTypeIdRequest {
+  optional string name = 1;
+}
+
+message GetResourceInfoTypeIdResponse {
+  optional int32 resource_info_type_id = 1;
+}
+
+message GetResourceRolesReponse {
+  repeated ResourceRoleProto resource_roles = 1;
+}
+
+message GetAllNotificationsRequest {
+  repeated NotificationProto notifications = 1;
+}
+
+message GetAllNotificationsResponse {
+  repeated NotificationProto notifications = 1;
+}
+
+message GetNotificationTypesResponse {
+  repeated NotificationTypeProto notification_types = 1;
+}
+
+message AuditProjectUserRequest {
+  optional int64 project_id = 1;
+  optional int64 resource_user_id = 2;
+  optional int64 resource_role_id = 3;
+  optional int32 audit_action_type_id = 4;
+  google.protobuf.Timestamp action_date = 5;
+  optional int64 action_user_id = 6;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+service ResourceService {
+  rpc GetResource(ResourceIdProto) returns (ResourceProto);
+  rpc GetAllResources(ResourceIdsProto) returns (GetResourcesResponse);
+  rpc GetResourcesByProjects(GetResourcesByProjectsRequest) returns (GetResourcesResponse);
+  rpc GetResourceSubmissions(ResourceIdsProto) returns (GetSubmissionsResponse);
+  rpc GetResourceInfo(ResourceIdProto) returns (GetResourceInfoResponse);
+  rpc GetAllResourceInfo(ResourceIdsProto) returns (GetResourceInfoResponse);
+  rpc GetResourceInfoTypeId(GetResourceInfoTypeIdRequest) returns (GetResourceInfoTypeIdResponse);
+  rpc GetResourceRoles(google.protobuf.Empty) returns (GetResourceRolesReponse);
+  rpc GetNotification(NotificationProto) returns (NotificationProto);
+  rpc GetAllNotifications(GetAllNotificationsRequest) returns (GetAllNotificationsResponse);
+  rpc GetNotificationType(NotificationTypeIdProto) returns (NotificationTypeProto);
+  rpc GetAllNotificationType(NotificationTypeIdsProto) returns (GetNotificationTypesResponse);
+  rpc CreateResource(ResourceProto) returns (ResourceIdProto);
+  rpc CreateResourceSubmission(ResourceSubmissionProto) returns (CountProto);
+  rpc CreateResourceInfo(ResourceInfoProto) returns (CountProto);
+  rpc CreateResourceRole(ResourceRoleProto) returns (ResourceRoleIdProto);
+  rpc CreateNotification(NotificationProto) returns (CountProto);
+  rpc CreateNotificationType(NotificationTypeProto) returns (NotificationTypeIdProto);
+  rpc UpdateResource(ResourceProto) returns (CountProto);
+  rpc UpdateResourceSubmission(ResourceSubmissionProto) returns (CountProto);
+  rpc UpdateResourceInfo(ResourceInfoProto) returns (CountProto);
+  rpc UpdateResourceRole(ResourceRoleProto) returns (CountProto);
+  rpc UpdateNotificationType(NotificationTypeProto) returns (CountProto);
+  rpc DeleteResource(ResourceIdProto) returns (CountProto);
+  rpc DeleteResourceSubmission(ResourceSubmissionProto) returns (CountProto);
+  rpc DeleteResourceInfo(ResourceInfoProto) returns (CountProto);
+  rpc DeleteResourceRole(ResourceRoleIdProto) returns (CountProto);
+  rpc DeleteNotification(NotificationProto) returns (CountProto);
+  rpc DeleteNotificationType(NotificationTypeIdProto) returns (CountProto);
+  rpc AuditProjectUser(AuditProjectUserRequest) returns (CountProto);
+  rpc searchResources(FilterProto) returns (GetResourcesResponse);
+  rpc searchResourceRoles(FilterProto) returns (GetResourceRolesReponse);
+  rpc searchNotifications(FilterProto) returns (GetAllNotificationsResponse);
+  rpc searchNotificationTypes(FilterProto) returns (GetNotificationTypesResponse);
+}

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package reviewfeedback;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.reviewfeedback.proto";
+option java_outer_classname = "ReviewFeedbackProtos";
+
+message ReviewFeedbackIdProto {
+  optional int64 review_feedback_id = 1;
+}
+
+message ProjectIdProto {
+  optional int64 project_id = 1;
+}
+
+message CountProto {
+  int32 count = 1;
+}
+
+message ReviewerIdsProto {
+  repeated int64 reviewer_user_ids = 1;
+}
+
+message ReviewFeedbackProto {
+  optional int64 review_feedback_id = 1;
+  optional int64 project_id = 2;
+  optional string comment = 3;
+  optional string create_user = 4;
+  google.protobuf.Timestamp create_date = 5;
+  optional string modify_user = 6;
+  google.protobuf.Timestamp modify_date = 7;
+}
+
+message ReviewFeedbacksProto {
+  repeated ReviewFeedbackProto review_feedbacks = 1;
+}
+
+message ReviewFeedbackDetailProto {
+  optional int64 review_feedback_id = 1;
+  optional int64 reviewer_user_id = 2;
+  optional int32 score = 3;
+  optional string feedback_text = 4;
+}
+
+message ReviewFeedbackDetailsProto {
+  repeated ReviewFeedbackDetailProto review_feedback_details = 1;
+}
+
+message ReviewFeedbackAuditProto {
+  optional int64 review_feedback_id = 1;
+  optional int64 project_id = 2;
+  optional string comment = 3;
+  optional int64 audit_action_type_id = 4;
+  optional string action_user = 5;
+  google.protobuf.Timestamp action_date = 6;
+}
+
+message ReviewFeedbackDetailAuditProto {
+  optional int64 review_feedback_id = 1;
+  optional int64 reviewer_user_id = 2;
+  optional int32 score = 3;
+  optional string feedback_text = 4;
+  optional int64 audit_action_type_id = 5;
+  optional string action_user = 6;
+  google.protobuf.Timestamp action_date = 7;
+}
+
+message DeleteReviewFeedbackDetailRequest {
+  optional int64 review_feedback_id = 1;
+  repeated int64 reviewer_user_ids = 2;
+}
+
+service ReviewFeedbackService {
+  rpc GetReviewFeedback(ReviewFeedbackIdProto) returns (ReviewFeedbackProto);
+  rpc GetReviewFeedbackByProjectId(ProjectIdProto) returns (ReviewFeedbacksProto);
+  rpc GetReviewFeedbackDetails(ReviewFeedbackIdProto) returns (ReviewFeedbackDetailsProto);
+  rpc GetReviewFeedbackDetailsByProjectId(ProjectIdProto) returns (ReviewFeedbackDetailsProto);
+  rpc GetReviewerIdsByFeedbackId(ReviewFeedbackIdProto) returns (ReviewerIdsProto);
+  rpc CreateReviewFeedback(ReviewFeedbackProto) returns (ReviewFeedbackIdProto);
+  rpc CreateReviewFeedbackDetail(ReviewFeedbackDetailProto) returns (CountProto);
+  rpc AuditReviewFeedback(ReviewFeedbackAuditProto) returns (CountProto);
+  rpc AuditReviewFeedbackDetail(ReviewFeedbackDetailAuditProto) returns (CountProto);
+  rpc UpdateReviewFeedback(ReviewFeedbackProto) returns (CountProto);
+  rpc UpdateReviewFeedbackDetail(ReviewFeedbackDetailProto) returns (CountProto);
+  rpc DeleteReviewFeedback(ReviewFeedbackIdProto) returns (CountProto);
+  rpc DeleteReviewFeedbackDetail(DeleteReviewFeedbackDetailRequest) returns (CountProto);
+}

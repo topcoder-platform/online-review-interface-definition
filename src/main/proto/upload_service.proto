@@ -1,0 +1,181 @@
+syntax = "proto3";
+
+package upload;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.upload.proto";
+option java_outer_classname = "UploadProtos";
+
+message EntityProto {
+  optional int64 id = 1;
+  optional string create_user = 2;
+  google.protobuf.Timestamp create_date = 3;
+  optional string modify_user = 4;
+  google.protobuf.Timestamp modify_date = 5;
+  optional string name = 6;
+  optional string description = 7;
+}
+
+message IdProto {
+  optional int64 id = 1;
+}
+
+message RemoveSubmissionImageRequest {
+  optional int64 submission_id = 1;
+  optional int32 image_id = 2;
+}
+
+message EntityIdsProto {
+  repeated int64 ids = 1;
+}
+
+message EntityListProto {
+  repeated EntityProto entities = 1;
+}
+
+message UploadProto {
+  optional int64 upload_id = 1;
+  optional string create_user = 2;
+  google.protobuf.Timestamp create_date = 3;
+  optional string modify_user = 4;
+  google.protobuf.Timestamp modify_date = 5;
+  optional int64 project_id = 6;
+  optional int64 project_phase_id = 7;
+  optional int64 resource_id = 8;
+  optional int64 upload_type_id = 9;
+  optional int64 upload_status_id = 10;
+  optional string parameter = 11;
+  optional string upload_desc = 12;
+  optional string url = 13;
+}
+
+message SubmissionProto {
+  optional int64 submission_id = 1;
+  optional string create_user = 2;
+  google.protobuf.Timestamp create_date = 3;
+  optional string modify_user = 4;
+  google.protobuf.Timestamp modify_date = 5;
+  optional int64 submission_status_id = 6;
+  optional int64 submission_type_id = 7;
+  optional double screening_score = 8;
+  optional double initial_score = 9;
+  optional double final_score = 10;
+  optional int64 placement = 11;
+  optional int32 user_rank = 12;
+  optional bool mark_for_purchase = 13;
+  optional int64 prize_id = 14;
+  optional int64 upload_id = 15;
+  optional string thurgood_job_id = 16;
+}
+
+message UploadCompleteProto {
+  UploadProto upload = 1;
+  EntityProto upload_type = 2;
+  EntityProto upload_status = 3;
+}
+
+message UploadCompleteListProto {
+  repeated UploadCompleteProto uploads = 1;
+}
+
+message SubmissionCompleteProto {
+  SubmissionProto submission = 1;
+  EntityProto submission_type = 2;
+  EntityProto submission_status = 3;
+  PrizeProto prize = 4;
+  PrizeTypeProto prize_type = 5;
+  UploadCompleteProto upload = 6;
+}
+
+message SubmissionCompleteListProto {
+  repeated SubmissionCompleteProto submissions = 1;
+}
+
+message PrizeProto {
+  optional int64 prize_id = 1;
+  optional int32 place = 2;
+  optional double prize_amount = 3;
+  optional int32 number_of_submissions = 4;
+  optional string create_user = 5;
+  google.protobuf.Timestamp create_date = 6;
+  optional string modify_user = 7;
+  google.protobuf.Timestamp modify_date = 8;
+}
+
+message PrizeTypeProto {
+  optional int64 prize_type_id = 1;
+  optional string prize_type_desc = 2;
+}
+
+message SubmissionImageProto {
+  optional int64 submission_id = 1;
+  optional int32 image_id = 2;
+  optional int32 sort_order = 3;
+  google.protobuf.Timestamp create_date = 4;
+  google.protobuf.Timestamp modify_date = 5;
+}
+
+message SubmissionImageListProto {
+  repeated SubmissionImageProto submission_images = 1;
+}
+
+message MimeTypeProto {
+  optional int64 mime_type_id = 1;
+  optional string mime_type_desc = 2;
+  optional int64 file_type_id = 3;
+  optional string file_type_desc = 4;
+  optional int32 sort = 5;
+  optional bool image_file_ind = 6;
+  optional string extension = 7;
+  optional bool bundled_file_ind = 8;
+}
+
+message MimeTypeListProto {
+  repeated MimeTypeProto mime_types = 1;
+}
+
+message FilterProto {
+  bytes filter = 1;
+}
+
+service UploadService {
+  rpc AddUploadType(EntityProto) returns (IdProto);
+  rpc AddUploadStatus(EntityProto) returns (IdProto);
+  rpc AddSubmissionType(EntityProto) returns (IdProto);
+  rpc AddSubmissionStatus(EntityProto) returns (IdProto);
+  rpc AddUpload(UploadProto) returns (IdProto);
+  rpc AddSubmission(SubmissionProto) returns (IdProto);
+  rpc AddSubmissionImage(SubmissionImageProto) returns (google.protobuf.Empty);
+  rpc RemoveUploadType(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveUploadStatus(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveSubmissionType(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveSubmissionStatus(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveUpload(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveSubmission(IdProto) returns (google.protobuf.Empty);
+  rpc RemoveSubmissionImage(RemoveSubmissionImageRequest) returns (google.protobuf.Empty);
+  rpc UpdateUploadType(EntityProto) returns (google.protobuf.Empty);
+  rpc UpdateUploadStatus(EntityProto) returns (google.protobuf.Empty);
+  rpc UpdateSubmissionType(EntityProto) returns (google.protobuf.Empty);
+  rpc UpdateSubmissionStatus(EntityProto) returns (google.protobuf.Empty);
+  rpc UpdateUpload(UploadProto) returns (google.protobuf.Empty);
+  rpc UpdateSubmission(SubmissionProto) returns (google.protobuf.Empty);
+  rpc UpdateSubmissionImage(SubmissionImageProto) returns (google.protobuf.Empty);
+  rpc GetAllUploadTypeIds(google.protobuf.Empty) returns (EntityIdsProto);
+  rpc GetAllUploadStatusIds(google.protobuf.Empty) returns (EntityIdsProto);
+  rpc GetAllSubmissionTypeIds(google.protobuf.Empty) returns (EntityIdsProto);
+  rpc GetAllSubmissionStatusIds(google.protobuf.Empty) returns (EntityIdsProto);
+  rpc GetAllMimeTypeIds(google.protobuf.Empty) returns (EntityIdsProto);
+  rpc LoadUploadTypes(EntityIdsProto) returns (EntityListProto);
+  rpc LoadUploadStatuses(EntityIdsProto) returns (EntityListProto);
+  rpc LoadSubmissionTypes(EntityIdsProto) returns (EntityListProto);
+  rpc LoadSubmissionStatuses(EntityIdsProto) returns (EntityListProto);
+  rpc LoadUploads(EntityIdsProto) returns (UploadCompleteListProto);
+  rpc LoadSubmissions(EntityIdsProto) returns (SubmissionCompleteListProto);
+  rpc GetImagesForSubmission(IdProto) returns (SubmissionImageListProto);
+  rpc LoadMimeTypes(EntityIdsProto) returns (MimeTypeListProto);
+  rpc SearchUploads(FilterProto) returns (UploadCompleteListProto);
+  rpc SearchSubmissions(FilterProto) returns (SubmissionCompleteListProto);
+}

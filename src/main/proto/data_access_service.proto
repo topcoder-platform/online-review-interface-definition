@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+package dataaccess;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.dataaccess.proto";
+option java_outer_classname = "DataAccessProtos";
+
+message GetComponentVersionInfoRequest {
+  optional int64 component_id = 1;
+  optional int64 version_number = 2;
+}
+
+message GetComponentVersionInfoResponse {
+  optional int64 version_id = 1;
+}
+
+message GetDocumentsRequest {
+  optional int64 component_version_id = 1;
+}
+
+message GetDocumentsResponse {
+  repeated DocumentProto documents = 1;
+}
+
+message DocumentProto {
+  optional int64 document_id = 1;
+  optional string document_name = 2;
+  optional string url = 3;
+  optional int64 document_type_id = 4;
+}
+
+message AddDocumentRequest {
+  optional int64 component_version_id = 1;
+  optional string document_name = 2;
+  optional string url = 3;
+  optional int64 document_type_id = 4;
+}
+
+message AddDocumentResponse {
+  optional int64 document_id = 1;
+}
+
+message UpdateDocumentRequest {
+  optional int64 document_id = 1;
+  optional int64 component_version_id = 2;
+  optional string document_name = 3;
+  optional string url = 4;
+  optional int64 document_type_id = 5;
+}
+
+message UpdateDocumentResponse {
+  optional int32 updated_count = 1;
+}
+
+message GetDeliverablesListResponse {
+  repeated DeliverableProto deliverables = 1;
+}
+
+message DeliverableProto {
+  optional int64 resource_role_id = 1;
+  optional int64 phase_type_id = 2;
+  optional int64 deliverable_id = 3;
+}
+
+message IsCockpitProjectUserRequest {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+}
+
+message IsCockpitProjectUserResponse {
+  optional bool is_cockpit_project_user = 1;
+}
+
+message GetCockpitProjectRequest {
+  optional int64 cockpit_project_id = 1;
+}
+
+message GetCockpitProjectResponse {
+  optional int64 tc_direct_project_id = 1;
+  optional string tc_direct_project_name = 2;
+}
+
+message GetAllCockpitProjectsResponse {
+  repeated GetCockpitProjectResponse cockpit_projects = 1;
+}
+
+message GetCockpitProjectsForUserRequest {
+  optional int64 user_id = 1;
+}
+
+message GetCockpitProjectsForUserResponse {
+  repeated GetCockpitProjectResponse cockpit_projects = 1;
+}
+
+message GetClientProjectRequest {
+  optional int64 client_project_id = 1;
+}
+
+message GetClientProjectResponse {
+  optional int64 project_id = 1;
+  optional string project_name = 2;
+}
+
+message GetAllClientProjectsResponse {
+  repeated GetClientProjectResponse client_projects = 1;
+}
+
+message GetClientProjectsForUserRequest {
+  optional int64 user_id = 1;
+}
+
+message GetClientProjectsForUserResponse {
+  repeated GetClientProjectResponse client_projects = 1;
+}
+
+message SearchProjectsRequest {
+  SearchProjectsParameter parameter = 1;
+  optional string value = 2;
+}
+
+enum SearchProjectsParameter {
+  STATUS_ID = 0;
+  USER_ID = 1;
+}
+
+message SearchProjectsResponse {
+  repeated ProjectProto projects = 1;
+  repeated ProjectInfoProto project_infos = 2;
+}
+
+message ProjectProto {
+  optional int64 project_id = 1;
+  optional int64 project_category_id = 2;
+  optional int64 project_status_id = 3;
+  optional string create_user = 4;
+  google.protobuf.Timestamp create_date = 5;
+  optional string modify_user = 6;
+  google.protobuf.Timestamp modify_date = 7;
+}
+
+message ProjectInfoProto {
+  optional int64 project_id = 1;
+  optional int64 project_info_type_id = 2;
+  optional string value = 3;
+}
+
+message GetProjectClientRequest {
+  optional int64 direct_project_id = 1;
+}
+
+message GetProjectClientResponse {
+  optional int64 client_id = 1;
+}
+
+message CheckUserChallengeEligibilityRequest {
+  optional int64 user_id = 1;
+  optional int64 challenge_id = 2;
+}
+
+message CheckUserChallengeEligibilityResponse {
+  optional int64 user_group_xref_found = 1;
+  optional int64 challenge_group_ind = 2;
+  optional int64 group_id = 3;
+}
+
+message SearchProjectPhasesRequest {
+  SearchProjectsParameter parameter = 1;
+  optional string value = 2;
+}
+
+message SearchProjectPhasesResponse {
+  repeated ProjectPhaseProto phases = 1;
+}
+
+message ProjectPhaseProto {
+  optional int64 project_id = 1;
+  optional int64 project_phase_id = 2;
+  optional int64 duration = 3;
+  google.protobuf.Timestamp actual_end_time = 4;
+  google.protobuf.Timestamp actual_start_time = 5;
+  google.protobuf.Timestamp fixed_start_time = 6;
+  google.protobuf.Timestamp scheduled_end_time = 7;
+  google.protobuf.Timestamp scheduled_start_time = 8;
+  optional int64 phase_status_id = 9;
+  optional int64 phase_type_id = 10;
+  optional int64 dependent_phase_id = 11;
+  optional int64 dependency_phase_id = 12;
+  optional int64 lag_time = 13;
+  optional bool dependency_start = 14;
+  optional bool dependent_start = 15;
+}
+
+message SearchUserResourcesByUserIdRequest {
+  optional int64 user_id = 1;
+}
+
+message SearchUserResourcesByUserIdAndStatusRequest {
+  optional int64 user_id = 1;
+  optional int64 status_id = 2;
+}
+
+message SearchUserResourcesResponse {
+  repeated ResourceProto resources = 1;
+  repeated ResourceInfoProto resource_infos = 2;
+}
+
+message ResourceProto {
+  optional int64 resource_id = 1;
+  optional int64 resource_role_id = 2;
+  optional int64 project_id = 3;
+  optional int64 phase_id = 4;
+  optional string create_user = 5;
+  google.protobuf.Timestamp create_date = 6;
+  optional string modify_user = 7;
+  google.protobuf.Timestamp modify_date = 8;
+}
+
+message ResourceInfoProto {
+  optional int64 resource_id = 1;
+  optional string resource_info_type_name = 2;
+  optional string value = 3;
+}
+
+service DataAccessService {
+  rpc GetComponentVersionInfo(GetComponentVersionInfoRequest) returns (GetComponentVersionInfoResponse);
+  rpc GetDocuments(GetDocumentsRequest) returns (GetDocumentsResponse);
+  rpc AddDocument(AddDocumentRequest) returns (AddDocumentResponse);
+  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse);
+  rpc GetDeliverablesList(google.protobuf.Empty) returns (GetDeliverablesListResponse);
+  rpc IsCockpitProjectUser(IsCockpitProjectUserRequest) returns (IsCockpitProjectUserResponse);
+  rpc GetCockpitProject(GetCockpitProjectRequest) returns (GetCockpitProjectResponse);
+  rpc GetAllCockpitProjects(google.protobuf.Empty) returns (GetAllCockpitProjectsResponse);
+  rpc GetCockpitProjectsForUser(GetCockpitProjectsForUserRequest) returns (GetCockpitProjectsForUserResponse);
+  rpc GetClientProject(GetClientProjectRequest) returns (GetClientProjectResponse);
+  rpc GetAllClientProjects(google.protobuf.Empty) returns (GetAllClientProjectsResponse);
+  rpc GetClientProjectsForUser(GetClientProjectsForUserRequest) returns (GetClientProjectsForUserResponse);
+  rpc SearchProjects(SearchProjectsRequest) returns (SearchProjectsResponse);
+  rpc GetProjectClient(GetProjectClientRequest) returns (GetProjectClientResponse);
+  rpc CheckUserChallengeEligibility(CheckUserChallengeEligibilityRequest) returns (CheckUserChallengeEligibilityResponse);
+  rpc SearchProjectPhases(SearchProjectPhasesRequest) returns (SearchProjectPhasesResponse);
+  rpc SearchUserResourcesByUserId(SearchUserResourcesByUserIdRequest) returns (SearchUserResourcesResponse);
+  rpc SearchUserResourcesByUserIdAndStatus(SearchUserResourcesByUserIdAndStatusRequest) returns (SearchUserResourcesResponse);
+}

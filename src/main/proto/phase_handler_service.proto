@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package phasehandler;
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.phasehandler.proto";
+option java_outer_classname = "PhaseHandlerProtos";
+
+message CountProto {
+  int32 count = 1;
+}
+
+message UpdateProjectResultPaymentRequest {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+  optional double payment = 3;
+}
+
+message UpdateProjectResultRequest {
+  optional int64 project_id = 1;
+}
+
+message UpdateFailedPassScreeningRequest {
+  optional int64 project_id = 1;
+}
+
+message UpdatePassScreeningRequest {
+  optional int64 project_id = 1;
+}
+
+message GetReviewsRequest {
+  optional int64 project_id = 1;
+}
+
+message GetReviewsResponse {
+  repeated ReviewProto reviews = 1;
+}
+
+message ReviewProto {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+  optional double raw_score = 3; 
+}
+
+message UpdateProjectResultReviewRequest {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+  optional double raw_score = 3; 
+}
+
+message GetAppealResponsesRequest {
+  optional int64 project_id = 1;
+}
+
+message GetAppealResponsesResponse {
+  repeated AppealResponseProto appeal_responses = 1;
+}
+
+message AppealResponseProto {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+  optional int32 submission_status_id = 3;
+  optional double final_score = 4;
+  optional int32 placement = 5;
+}
+
+message UpdateProjectResultAppealResponseRequest {
+  optional int64 project_id = 1;
+  optional int64 user_id = 2;
+  optional double final_score = 3;
+  optional int32 placed = 4;
+  optional int32 passed_review_ind = 5;
+}
+
+service PhaseHandlerService {
+  rpc UpdateProjectResultPayment(UpdateProjectResultPaymentRequest) returns (CountProto);
+  rpc UpdateProjectResult(UpdateProjectResultRequest) returns (CountProto);
+  rpc UpdateFailedPassScreening(UpdateFailedPassScreeningRequest) returns (CountProto);
+  rpc UpdatePassScreening(UpdatePassScreeningRequest) returns (CountProto);
+  rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse);
+  rpc UpdateProjectResultReview(UpdateProjectResultReviewRequest) returns (CountProto);
+  rpc GetAppealResponses(GetAppealResponsesRequest) returns (GetAppealResponsesResponse);
+  rpc UpdateProjectResultAppealResponse(UpdateProjectResultAppealResponseRequest) returns (CountProto);
+}

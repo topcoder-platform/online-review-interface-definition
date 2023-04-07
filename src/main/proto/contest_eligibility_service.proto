@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package contesteligibility;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "com.topcoder.onlinereview.grpc.contesteligibility.proto";
+option java_outer_classname = "ContestEligibilityProtos";
+
+message CreateRequest {
+  optional int64 contest_id = 1;
+  optional bool studio = 2;
+}
+
+message CreateResponse {
+  optional int64 contest_eligibility_id = 1;
+}
+
+message RemoveRequest {
+  optional int64 contest_eligibility_id = 1;
+}
+
+message BulkRemoveRequest {
+  repeated int64 contest_eligibility_ids = 1;
+}
+
+message UpdateRequest {
+  optional int64 contest_eligibility_id = 1;
+  optional int64 contest_id = 2;
+  optional bool studio = 3;
+}
+
+message GetContestEligibilityRequest {
+  optional int64 contest_id = 1;
+  optional bool studio = 2;
+}
+
+message ContestEligibilitiesResponse {
+  repeated GroupContestEligibilityProto group_contest_eligibilities = 1;
+}
+
+message GroupContestEligibilityProto {
+  optional int64 contest_eligibility_id = 1;
+  optional int64 contest_id = 2;
+  optional bool studio = 3;
+  optional int64 group_id = 4;
+}
+
+message HaveEligibilityRequest {
+  repeated int64 contest_ids = 1;
+  optional bool studio = 2;
+}
+
+message HaveEligibilityResponse {
+  repeated int64 contest_ids = 1;
+}
+
+message ValidateUserContestEligibilityRequest {
+  optional int64 user_id = 1;
+  optional int64 group_id = 2;
+}
+
+message ValidateUserContestEligibilityResponse {
+  bool is_valid = 1;
+}
+
+service ContestEligibilityService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Remove(RemoveRequest) returns (google.protobuf.Empty);
+  rpc BulkRemove(BulkRemoveRequest) returns (google.protobuf.Empty);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc GetContestEligibility(GetContestEligibilityRequest) returns (ContestEligibilitiesResponse);
+  rpc HaveEligibility(HaveEligibilityRequest) returns (HaveEligibilityResponse);
+  rpc ValidateUserContestEligibility(ValidateUserContestEligibilityRequest) returns (ValidateUserContestEligibilityResponse);
+}
