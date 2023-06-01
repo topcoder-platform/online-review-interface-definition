@@ -50,7 +50,7 @@ message GetCoderAllRatingsResponse {
 message CoderRatingsProto {
   optional int64 coder_id = 1;
   optional string handle = 2;
-  optional int32 algorithm_rating = 3;
+  optional sint32 algorithm_rating = 3;
   optional int32 hs_algorithm_rating = 4;
   optional int32 marathon_match_rating = 5;
   optional int32 design_rating = 6;
